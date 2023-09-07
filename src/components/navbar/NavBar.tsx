@@ -1,6 +1,9 @@
 import React from 'react';
 import styles from './navbar.module.css';
 import Image from 'next/image';
+import Link from 'next/link';
+import AuthLinks from '../authLinks/AuthLinks';
+import ThemeToggle from '../themeToogle/ThemeToggle';
 
 const NavBar = () => {
   return (
@@ -10,8 +13,20 @@ const NavBar = () => {
         <Image src='/gitlab.png' alt='gitlab' width={24} height={24} />
         <Image src='/linkedn.png' alt='linkedn' width={24} height={24} />
       </div>
-      <div className={styles.logo}></div>
-      <div className={styles.links}></div>
+      <div className={styles.logo}>Blog</div>
+      <div className={styles.links}>
+        <ThemeToggle />
+        <Link href='/' className={styles.link}>
+          Home
+        </Link>
+        <Link href='/' className={styles.link}>
+          Contact
+        </Link>
+        <Link href='/' className={styles.link}>
+          About
+        </Link>
+        <AuthLinks />
+      </div>
     </div>
   );
 };
