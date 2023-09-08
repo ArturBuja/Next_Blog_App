@@ -1,0 +1,38 @@
+.container {
+  margin-bottom: 3.125rem;
+  display: flex;
+  align-items: center;
+  gap: 3.125rem;
+}
+.imageContainer {
+  flex: 1;
+  height: 21.875rem;
+  position: relative;
+}
+.image {
+  object-fit: cover;
+}
+.textContainer {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 1.875rem;
+}
+
+.date {
+  color: gray;
+}
+.category {
+  color: crimson;
+  font-weight: 500;
+}
+.postDesc {
+  font-size: 1.125rem;
+  font-weight: 300;
+  color: var(--softTextColor);
+}
+.link {
+  border-bottom: 1px solid crimson;
+  width: max-content;
+  padding: 0.125rem 0;
+}

@@ -40,7 +40,20 @@
 .line.open:nth-child(3) {
   animation: first-animate-line-3 0.7s forwards;
 }
-
+.responsiveMenu {
+  background: var(--bg);
+  position: absolute;
+  top: 6.25rem;
+  left: 0;
+  gap: 3.125rem;
+  font-size: 2.25rem;
+  width: 100%;
+  height: calc(100vh - 6.25rem);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
 /* MEDIA */
 @media screen and (max-width: 640px) {
   .burger {

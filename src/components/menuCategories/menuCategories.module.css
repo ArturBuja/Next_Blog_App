@@ -1,0 +1,31 @@
+.categoryList {
+  margin-top: 2.1875rem;
+  margin-bottom: 3.75rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.25rem;
+}
+.categoryItem {
+  padding: 0.625rem 1.5625rem;
+  border-radius: 0.625rem;
+  font-size: 0.875rem;
+  text-transform: capitalize;
+}
+.categoryItem.style {
+  background: #57c4ff31;
+}
+.categoryItem.fashion {
+  background: #da85c731;
+}
+.categoryItem.food {
+  background: #7fb88133;
+}
+.categoryItem.travel {
+  background: #ff795736;
+}
+.categoryItem.culture {
+  background: #ffb05f45;
+}
+.categoryItem.coding {
+  background: #5e4fff31;
+}

@@ -15,14 +15,14 @@ const AuthLinks = () => {
     <>
       {status === 'nonauthenticated' ? (
         <Link href='/login' className={styles.link}>
-          Login
+          Zaloguj
         </Link>
       ) : (
         <>
           <Link href='/write' className={styles.link}>
-            Write
+            Napisz
           </Link>
-          <span className={styles.link}>Logout</span>
+          <span className={styles.link}>Wyloguj</span>
         </>
       )}
       <div onClick={() => setOpen(!open)} className={styles.burger}>
@@ -32,15 +32,15 @@ const AuthLinks = () => {
       </div>
       {open && (
         <div className={styles.responsiveMenu}>
-          <Link href='/'>Home</Link>
-          <Link href='/'>Contact</Link>
-          <Link href='/'>About</Link>
+          <Link href='/'>Strona Główna</Link>
+          <Link href='/'>Kontakt</Link>
+          <Link href='/'>O mnie</Link>
           {status === 'nonauthenticated' ? (
-            <Link href='/login'>Login</Link>
+            <Link href='/login'>Zaloguj</Link>
           ) : (
             <>
-              <Link href='/write'>Write</Link>
-              <span className={styles.link}>Logout</span>
+              <Link href='/write'>Napisz</Link>
+              <span className={styles.link}>Wyloguj</span>
             </>
           )}
         </div>

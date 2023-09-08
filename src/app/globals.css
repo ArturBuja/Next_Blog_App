@@ -23,6 +23,7 @@ a {
   --textColor: #ddd;
   --softBg: #1f273a;
   --softTextColor: #a6a6a6;
+  height: calc(100vh - 6.25rem);
 }
 .container {
   min-height: 100vh;
