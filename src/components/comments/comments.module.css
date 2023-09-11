@@ -1,0 +1,62 @@
+.container {
+  margin-top: 3.125rem;
+}
+.title {
+  color: var(--softTextColor);
+  margin-bottom: 1.875rem;
+}
+.write {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.875rem;
+}
+.input {
+  padding: 1.25rem;
+  width: 100%;
+}
+
+.button {
+  padding: 1rem 1.25rem;
+  background-color: teal;
+  color: #fff;
+  font-weight: bold;
+  border: none;
+  border-radius: 0.3125rem;
+  cursor: pointer;
+}
+
+.comments {
+  margin-top: 3.125rem;
+}
+.comment {
+  margin-bottom: 3.125rem;
+}
+
+.user {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  margin-bottom: 1.25rem;
+}
+.image {
+  border-radius: 50%;
+  object-fit: cover;
+}
+.userInfo {
+  display: flex;
+  font-display: column;
+  gap: 0.3125rem;
+  color: var(--softTextColor);
+}
+
+.username {
+  font-weight: 500;
+}
+.date {
+  font-size: 0.875rem;
+}
+.desc {
+  font-size: 1.125rem;
+  font-weight: 300;
+}
