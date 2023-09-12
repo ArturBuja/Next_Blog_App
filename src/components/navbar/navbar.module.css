@@ -22,6 +22,9 @@
   font-size: 1.25rem;
   align-items: center;
 }
+.link {
+  white-space: nowrap;
+}
 
 @media screen and (max-width: 1280px) {
   .logo {
