@@ -1,13 +1,37 @@
 'use client';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+
 import Image from 'next/image';
-import styles from './writePage.module.css';
+import { useSession } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
 import ReactQuill from 'react-quill';
+
 import 'react-quill/dist/quill.bubble.css';
+import styles from './writePage.module.css';
 
 const WritePage = () => {
+  const router = useRouter();
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState('');
+  const { data, status } = useSession();
+
+  useEffect(() => {
+    const redirectToHome = () => {
+      if (status === 'unauthenticated') {
+        router.push('/');
+      }
+    };
+
+    if (status === 'loading') {
+      return;
+    }
+
+    redirectToHome();
+  }, [router, status]);
+
+  if (status === 'loading') {
+    return <div className={styles.loading}>Ładowanie...</div>;
+  }
 
   return (
     <div className={styles.container}>

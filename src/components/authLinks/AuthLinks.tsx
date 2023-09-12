@@ -1,11 +1,12 @@
 'use client';
 import { useState, useMemo } from 'react';
+import { signOut, useSession } from 'next-auth/react';
 import styles from './authLinks.module.css';
 import Link from 'next/link';
 
 const AuthLinks = () => {
   const [open, setOpen] = useState(false);
-  const status = 'nonauthenticated';
+  const { status } = useSession();
   const linesStyle = useMemo(
     () => `${styles.line} ${open ? styles.open : styles.closed}`,
     [open]
@@ -13,7 +14,7 @@ const AuthLinks = () => {
 
   return (
     <>
-      {status === 'nonauthenticated' ? (
+      {status === 'unauthenticated' ? (
         <Link href='/login' className={styles.link}>
           Zaloguj
         </Link>
@@ -22,7 +23,9 @@ const AuthLinks = () => {
           <Link href='/write' className={styles.link}>
             Napisz
           </Link>
-          <span className={styles.link}>Wyloguj</span>
+          <span className={styles.link} onClick={() => signOut()}>
+            Wyloguj
+          </span>
         </>
       )}
       <div onClick={() => setOpen(!open)} className={styles.burger}>
@@ -35,7 +38,7 @@ const AuthLinks = () => {
           <Link href='/'>Strona Główna</Link>
           <Link href='/'>Kontakt</Link>
           <Link href='/'>O mnie</Link>
-          {status === 'nonauthenticated' ? (
+          {status === 'unauthenticated' ? (
             <Link href='/login'>Zaloguj</Link>
           ) : (
             <>
