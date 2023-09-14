@@ -1,29 +1,29 @@
 import Image from 'next/image';
 import styles from './card.module.css';
 import Link from 'next/link';
+import { IPage } from '@/utils/api';
 
-const Card = () => {
+const Card = ({ key, post }: { key: string; post: IPage }) => {
   return (
-    <div className={styles.container}>
-      <div className={styles.imageContainer}>
-        <Image src={'/p1.jpeg'} alt='' fill className={styles.image} />
-      </div>
+    <div className={styles.container} key={key}>
+      {post.img ? (
+        <div className={styles.imageContainer}>
+          <Image src={post.img} alt={post.img} fill className={styles.image} />
+        </div>
+      ) : null}
       <div className={styles.textContainer}>
         <div className={styles.detail}>
-          <span className={styles.date}>11.10.2023 -</span>
-          <span className={styles.category}>CULTURE</span>
+          <span className={styles.date}>
+            {post.createdAt.substring(0, 10)} -
+          </span>
+          <span className={styles.category}>{post.catSlug}</span>
         </div>
-        <Link href={'/'}>
-          <h1>Lorem ipsum, dolor sit amet consectetur adipisicing.</h1>
+        <Link href={`/posts/${post.slug}`}>
+          <h1>{post.title}</h1>
         </Link>
-        <p className={styles.postDesc}>
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Optio, odit
-          ad amet possimus vero id animi atque cumque culpa ipsam alias,
-          ratione, accusamus fugit soluta! Ab reiciendis porro velit
-          perspiciatis?
-        </p>
-        <Link href={'/'} className={styles.link}>
-          Read More
+        <p className={styles.postDesc}>{post.desc.substring(0, 60)}</p>
+        <Link href={`/posts/${post.slug}`} className={styles.link}>
+          Zobacz więcej
         </Link>
       </div>
     </div>

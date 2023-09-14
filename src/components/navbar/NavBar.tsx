@@ -13,7 +13,7 @@ const NavBar = () => {
         <Image src='/gitlab.png' alt='gitlab' width={24} height={24} />
         <Image src='/linkedn.png' alt='linkedn' width={24} height={24} />
       </div>
-      <div className={styles.logo}>Blog</div>
+      <div className={styles.logo}>from Lines to Life</div>
       <div className={styles.links}>
         <ThemeToggle />
         <Link href='/' className={styles.link}>

@@ -3,6 +3,7 @@
   color: white;
   padding: 0.3125rem 0.625rem;
   text-align: center;
+  text-transform: capitalize;
 }
 .content {
   display: flex;
