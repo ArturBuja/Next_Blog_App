@@ -10,10 +10,15 @@ import 'react-quill/dist/quill.bubble.css';
 import styles from './writePage.module.css';
 
 const WritePage = () => {
+  const { status } = useSession();
   const router = useRouter();
+
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState('');
-  const { data, status } = useSession();
+  const [file, setFile] = useState<File | null>(null);
+  const [media, setMedia] = useState('');
+  const [title, setTitle] = useState('');
+  const [catSlug, setCatSlug] = useState('');
 
   useEffect(() => {
     const redirectToHome = () => {
@@ -42,8 +47,16 @@ const WritePage = () => {
         </button>
         {open && (
           <div className={styles.add}>
+            <input
+              type='file'
+              id='image'
+              onChange={e => setFile(e.target.files?.[0] || null)}
+              style={{ display: 'none' }}
+            />
             <button className={styles.addButton}>
-              <Image src={'/image.png'} alt='' width={16} height={16} />
+              <label htmlFor='image'>
+                <Image src={'/image.png'} alt='' width={16} height={16} />
+              </label>
             </button>
             <button className={styles.addButton}>
               <Image src={'/external.png'} alt='' width={16} height={16} />

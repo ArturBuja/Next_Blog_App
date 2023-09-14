@@ -6,6 +6,7 @@ import useSWR from 'swr';
 import { useSession } from 'next-auth/react';
 import { API_URL } from '@/utils/contants';
 import { IComment } from '@/utils/api';
+import { useState } from 'react';
 
 const fetcher = async (url: string) => {
   const res = await fetch(url);
@@ -18,20 +19,40 @@ const fetcher = async (url: string) => {
 
 const Comments = ({ postSlug }: { postSlug: string }) => {
   const { status } = useSession();
-  const { data, isLoading }: { data: IComment[]; isLoading: boolean } = useSWR(
+  const {
+    data,
+    mutate,
+    isLoading,
+  }: { data: IComment[]; isLoading: boolean; mutate: () => void } = useSWR(
     `${API_URL}/comments?postSlug=${postSlug}`,
     fetcher
   );
+  const [desc, setDesc] = useState('');
+  const handleSubmit = async () => {
+    await fetch(`/api/comments`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ desc, postSlug }),
+    });
+    mutate();
+    setDesc('');
+  };
   return (
     <div className={styles.container}>
       <h1 className={styles.title}>Komentarze</h1>
       {status === 'authenticated' ? (
         <div className={styles.write}>
           <textarea
-            placeholder='napisz komentarz...'
+            placeholder='Napisz komentarz...'
             className={styles.input}
+            value={desc}
+            onChange={e => setDesc(e.target.value)}
           />
-          <button className={styles.button}>Dodaj</button>
+          <button className={styles.button} onClick={handleSubmit}>
+            Dodaj
+          </button>
         </div>
       ) : (
         <Link href='/login'>Zaloguj się aby dodawać komentarze</Link>
