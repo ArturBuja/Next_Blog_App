@@ -3,9 +3,10 @@ import styles from './categoryList.module.css';
 import Link from 'next/link';
 import Image from 'next/image';
 import { ICategory } from '@/utils/api';
+import { API_URL_TEST } from '@/utils/contants';
 
 const getData = async (): Promise<ICategory[]> => {
-  const res = await fetch('fromthelinetolife.vercel.app/api/categories', {
+  const res = await fetch(`${API_URL_TEST}/categories`, {
     cache: 'no-cache',
   });
   if (!res.ok) {

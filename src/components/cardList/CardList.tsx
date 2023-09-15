@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './cardList.module.css';
 import Pagination from '../pagination/Pagination';
-import { POST_PER_PAGE } from '@/utils/contants';
+import { API_URL_TEST, POST_PER_PAGE } from '@/utils/contants';
 import Card from '../card/Card';
 import { IPage } from '@/utils/api';
 
@@ -10,7 +10,7 @@ const getData = async (
   cat?: string
 ): Promise<{ posts: IPage[]; count: number }> => {
   const res = await fetch(
-    `fromthelinetolife.vercel.app/api/posts?page=${page}&cat=${cat || ''}`,
+    `${API_URL_TEST}/posts?page=${page}&cat=${cat || ''}`,
     {
       cache: 'no-cache',
     }
