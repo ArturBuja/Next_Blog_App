@@ -2,11 +2,11 @@ import Menu from '@/components/menu/Menu';
 import styles from './singlePage.module.css';
 import Image from 'next/image';
 import Comments from '@/components/comments/Comments';
-import { API_URL } from '@/utils/contants';
+import { API_URL_TEST } from '@/utils/contants';
 import { IPage, IPost } from '@/utils/api';
 
 const getData = async (slug: string): Promise<IPost | null> => {
-  const res = await fetch(`${API_URL}/posts/${slug}`, {
+  const res = await fetch(`${API_URL_TEST}/posts/${slug}`, {
     cache: 'no-cache',
   });
 

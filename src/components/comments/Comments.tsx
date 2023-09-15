@@ -4,7 +4,7 @@ import styles from './comments.module.css';
 import Image from 'next/image';
 import useSWR from 'swr';
 import { useSession } from 'next-auth/react';
-import { API_URL } from '@/utils/contants';
+import { API_URL_TEST } from '@/utils/contants';
 import { IComment } from '@/utils/api';
 import { useState } from 'react';
 
@@ -24,7 +24,7 @@ const Comments = ({ postSlug }: { postSlug: string }) => {
     mutate,
     isLoading,
   }: { data: IComment[]; isLoading: boolean; mutate: () => void } = useSWR(
-    `${API_URL}/comments?postSlug=${postSlug}`,
+    `${API_URL_TEST}/comments?postSlug=${postSlug}`,
     fetcher
   );
   const [desc, setDesc] = useState('');
