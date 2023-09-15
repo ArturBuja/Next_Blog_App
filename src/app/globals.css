@@ -23,7 +23,6 @@ a {
   --textColor: #ddd;
   --softBg: #1f273a;
   --softTextColor: #a6a6a6;
-  height: calc(100vh - 6.25rem);
 }
 .container {
   min-height: 100vh;
@@ -48,6 +47,7 @@ a {
 } */
 div.ql-editor.ql-blank::before {
   color: var(--softTextColor);
+  padding-top: 3%;
 }
 
 /* MEDIA */
