@@ -5,7 +5,7 @@ import Image from 'next/image';
 import { ICategory } from '@/utils/api';
 
 const getData = async (): Promise<ICategory[]> => {
-  const res = await fetch('http://localhost:3000/api/categories', {
+  const res = await fetch('fromthelinetolife.vercel.app/api/categories', {
     cache: 'no-cache',
   });
   if (!res.ok) {

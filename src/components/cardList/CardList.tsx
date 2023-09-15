@@ -10,7 +10,7 @@ const getData = async (
   cat?: string
 ): Promise<{ posts: IPage[]; count: number }> => {
   const res = await fetch(
-    `http://localhost:3000/api/posts?page=${page}&cat=${cat || ''}`,
+    `fromthelinetolife.vercel.app/api/posts?page=${page}&cat=${cat || ''}`,
     {
       cache: 'no-cache',
     }
