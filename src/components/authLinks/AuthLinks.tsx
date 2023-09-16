@@ -6,7 +6,7 @@ import Link from 'next/link';
 
 const AuthLinks = () => {
   const [open, setOpen] = useState(false);
-  const { status } = useSession();
+  const { status, data } = useSession();
   const linesStyle = useMemo(
     () => `${styles.line} ${open ? styles.open : styles.closed}`,
     [open]
@@ -20,9 +20,11 @@ const AuthLinks = () => {
         </Link>
       ) : (
         <>
-          <Link href='/write' className={styles.link}>
-            Napisz
-          </Link>
+          {data?.user?.email === 'artur.buja2@gmail.com' && (
+            <Link href='/write' className={styles.link}>
+              Napisz
+            </Link>
+          )}
           <span className={styles.link} onClick={() => signOut()}>
             Wyloguj
           </span>
@@ -36,8 +38,8 @@ const AuthLinks = () => {
       {open && (
         <div className={styles.responsiveMenu}>
           <Link href='/'>Strona Główna</Link>
-          <Link href='/'>Kontakt</Link>
-          <Link href='/'>O mnie</Link>
+          <Link href='/contact'>Kontakt</Link>
+          <Link href='/about'>O mnie</Link>
           {status === 'unauthenticated' ? (
             <Link href='/login'>Zaloguj</Link>
           ) : (

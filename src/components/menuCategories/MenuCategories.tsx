@@ -1,33 +1,19 @@
 import Link from 'next/link';
 import React from 'react';
 import styles from './menuCategories.module.css';
-const categoryMap = [
-  {
-    name: 'style',
-    image: '/style.png',
-  },
-  {
-    name: 'fashion',
-    image: '/fashion.png',
-  },
-  { name: 'food', image: '/food.png' },
-  {
-    name: 'travel',
-    image: '/travel.png',
-  },
-  { name: 'culture', image: '/culture.png' },
-  { name: 'coding', image: '/coding.png' },
-];
-const MenuCategories = () => {
+import { getAllCategories } from '@/app/api';
+
+const MenuCategories = async () => {
+  const data = await getAllCategories();
   return (
     <div className={styles.categoryList}>
-      {categoryMap.map(category => (
+      {data.map(category => (
         <Link
-          href={'/blog?cat=' + category.name}
-          key={category.name}
-          className={`${styles.categoryItem} ${styles[category.name]}`}
+          href={'/blog?cat=' + category.slug}
+          key={category.slug}
+          className={`${styles.categoryItem} ${styles[category.slug]}`}
         >
-          {category.name}
+          {category.slug}
         </Link>
       ))}
     </div>

@@ -2,6 +2,7 @@ import React from 'react';
 import styles from './footer.module.css';
 import Image from 'next/image';
 import Link from 'next/link';
+import Socials from '../organism/Socials';
 
 const Footer = () => {
   return (
@@ -12,13 +13,11 @@ const Footer = () => {
           <h1 className={styles.logoText}>from lines to life</h1>
         </div>
         <p className={styles.desc}>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Mollitia
-          deleniti facere repudiandae numquam quaerat voluptate!
+          Osobisty blog, w którym opisuje trochę życia, trochę pracy, trochę
+          prywaty!
         </p>
         <div className={styles.icons}>
-          <Image src='/github.png' alt='github' width={18} height={18} />
-          <Image src='/gitlab.png' alt='gitlab' width={18} height={18} />
-          <Image src='/linkedn.png' alt='linkedn' width={18} height={18} />
+          <Socials />
         </div>
       </div>
       <div className={styles.links}>
@@ -27,35 +26,50 @@ const Footer = () => {
           <Link href='/' className={styles.link}>
             Główna
           </Link>
-          <Link href='/' className={styles.link}>
+          <Link href='/contact' className={styles.link}>
             Kontakt
           </Link>
-          <Link href='/' className={styles.link}>
+          <Link href='/about' className={styles.link}>
             O mnie
           </Link>
         </div>
         <div className={styles.list}>
           <span className={styles.listTitle}>Tagi</span>
-          <Link href='/' className={styles.link}>
+          <Link href='/blog?cat=coding' className={styles.link}>
             Coding
           </Link>
-          <Link href='/' className={styles.link}>
+          <Link href='/blog?cat=style' className={styles.link}>
             Style
           </Link>
-          <Link href='/' className={styles.link}>
-            ravel
+          <Link href='/blog?cat=travel' className={styles.link}>
+            Travel
           </Link>
         </div>
         <div className={styles.list}>
           <span className={styles.listTitle}>Social</span>
-          <Link href='/' className={styles.link}>
+          <Link
+            target='_blank'
+            rel='noopener noreferrer'
+            href='https://github.com/ArturBuja'
+            className={styles.link}
+          >
             GitHub
           </Link>
-          <Link href='/' className={styles.link}>
+          <Link
+            target='_blank'
+            rel='noopener noreferrer'
+            href='https://gitlab.com/ArturBuja'
+            className={styles.link}
+          >
             GitLab
           </Link>
-          <Link href='/' className={styles.link}>
-            Linkedn
+          <Link
+            target='_blank'
+            rel='noopener noreferrer'
+            href='https://www.linkedin.com/in/artur-buja/'
+            className={styles.link}
+          >
+            Linkedin
           </Link>
         </div>
       </div>

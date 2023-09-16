@@ -4,14 +4,13 @@ import Image from 'next/image';
 import Link from 'next/link';
 import AuthLinks from '../authLinks/AuthLinks';
 import ThemeToggle from '../themeToogle/ThemeToggle';
+import Socials from '../organism/Socials';
 
 const NavBar = () => {
   return (
     <div className={styles.container}>
       <div className={styles.social}>
-        <Image src='/github.png' alt='github' width={24} height={24} />
-        <Image src='/gitlab.png' alt='gitlab' width={24} height={24} />
-        <Image src='/linkedn.png' alt='linkedn' width={24} height={24} />
+        <Socials />
       </div>
       <div className={styles.logo}>from Lines to Life</div>
       <div className={styles.links}>
@@ -19,10 +18,10 @@ const NavBar = () => {
         <Link href='/' className={styles.link}>
           Główna
         </Link>
-        <Link href='/' className={styles.link}>
+        <Link href='/contact' className={styles.link}>
           Kontakt
         </Link>
-        <Link href='/' className={styles.link}>
+        <Link href='/about' className={styles.link}>
           O mnie
         </Link>
         <AuthLinks />
