@@ -49,9 +49,8 @@ const WritePage = () => {
 
     redirectToHome();
   }, [router, status]);
-  useEffect(() => {
-    getAllCategories().then(data => setCategories(data));
-  }, []);
+
+  getAllCategories().then(data => setCategories(data));
 
   useEffect(() => {
     const storage = getStorage(app);
