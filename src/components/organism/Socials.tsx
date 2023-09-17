@@ -1,25 +1,32 @@
+'use client';
+import React, { useContext, useMemo } from 'react';
+import { ThemeContext } from '@/context/ThemeContext';
 import Image from 'next/image';
 import Link from 'next/link';
-import React from 'react';
 
-const socialMap = [
-  {
-    src: '/github.png',
-    alt: 'github',
-    href: 'https://github.com/ArturBuja',
-  },
-  {
-    src: '/gitlab.png',
-    alt: 'gitlab',
-    href: 'https://gitlab.com/ArturBuja',
-  },
-  {
-    src: '/linkedn.png',
-    alt: 'linkedin',
-    href: 'https://www.linkedin.com/in/artur-buja/',
-  },
-];
 const Socials = () => {
+  const { theme } = useContext(ThemeContext);
+
+  const socialMap = useMemo(
+    () => [
+      {
+        src: theme === 'light' ? '/github.png' : '/github_white.png',
+        alt: 'github',
+        href: 'https://github.com/ArturBuja',
+      },
+      {
+        src: '/gitlab.png',
+        alt: 'gitlab',
+        href: 'https://gitlab.com/ArturBuja',
+      },
+      {
+        src: '/linkedn.png',
+        alt: 'linkedin',
+        href: 'https://www.linkedin.com/in/artur-buja/',
+      },
+    ],
+    [theme]
+  );
   return (
     <>
       {socialMap.map(item => (

@@ -9,7 +9,7 @@ const Footer = () => {
     <div className={styles.container}>
       <div className={styles.info}>
         <div className={styles.logo}>
-          <Image src='/logo.png' alt='logo' width={50} height={50} />
+          {/* <Image src='/logo.png' alt='logo' width={50} height={50} /> */}
           <h1 className={styles.logoText}>from lines to life</h1>
         </div>
         <p className={styles.desc}>

@@ -1,35 +1,27 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
-import styles from './menuPosts.module.css';
+import styles from './menuPopular.module.css';
 import { IPage } from '@/utils/api';
 import { API_URL_TEST } from '@/utils/contants';
 
-const getData = async (): Promise<{ posts: IPage[]; count: number }> => {
-  const res = await fetch(`${API_URL_TEST}/posts?popular=true`, {
-    cache: 'no-cache',
-  });
+// const getData = async (): Promise<{ posts: IPage[]; count: number }> => {
+//   const res = await fetch(`${API_URL_TEST}/posts?popular=true`, {
+//     cache: 'no-cache',
+//   });
 
-  if (!res.ok) {
-    throw new Error(res.statusText);
-  }
+//   if (!res.ok) {
+//     throw new Error(res.statusText);
+//   }
 
-  return res.json();
-};
+//   return res.json();
+// };
 
-const MenuPosts = async () => {
-  const { posts, count } = await getData();
-  posts.sort((a, b) => b.views - a.views);
-  if (count === 0) {
-    return (
-      <div className={styles.items}>
-        <p>Brak najpopularniejszych postów</p>
-      </div>
-    );
-  }
+const MenuPopular = async () => {
   return (
     <div className={styles.items}>
-      {posts.map((post: IPage) => (
+      <p className={styles.text}>Brak najpopularniejszych postów</p>
+      {/* {data.map((post: IPage) => (
         <Link
           href={`/posts/${post.slug}`}
           className={styles.item}
@@ -58,9 +50,9 @@ const MenuPosts = async () => {
             </div>
           </div>
         </Link>
-      ))}
+      ))} */}
     </div>
   );
 };
 
-export default MenuPosts;
+export default MenuPopular;

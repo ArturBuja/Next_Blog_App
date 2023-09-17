@@ -10,7 +10,7 @@
   flex: 1;
 }
 .logo {
-  flex: 1;
+  flex: 3;
   text-align: left;
   font-size: 2.25rem;
   font-weight: 700;
@@ -30,7 +30,7 @@
 
 @media screen and (max-width: 1280px) {
   .logo {
-    font-size: 2rem;
+    font-size: 1.75rem;
   }
   .links {
     font-size: 1.125rem;

@@ -33,11 +33,15 @@ const CardList = async ({ page, cat }: { page: number; cat?: string }) => {
     <div className={styles.container}>
       <h1 className={styles.title}>Ostatnie posty</h1>
       <div className={styles.posts}>
-        {posts?.map(post => (
-          <Card key={post.id} post={post} />
-        ))}
+        {posts.length > 0 ? (
+          posts?.map(post => <Card key={post.id} post={post} />)
+        ) : (
+          <p style={{ textAlign: 'center' }}>Aktualnie brak postów</p>
+        )}
       </div>
-      <Pagination page={page} hasPrevious={hasPrevious} hasNext={hasNext} />
+      {posts.length > 0 && (
+        <Pagination page={page} hasPrevious={hasPrevious} hasNext={hasNext} />
+      )}
     </div>
   );
 };

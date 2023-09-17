@@ -17,8 +17,9 @@ import styles from './writePage.module.css';
 import { app } from '@/utils/firebase';
 import { slugify } from '@/utils/helpers';
 import dynamic from 'next/dynamic';
+import { getAllCategories } from '../api';
+import { ICategory } from '@/utils/api';
 
-const storage = getStorage(app);
 const metadata = {
   contentType: 'image/jpeg',
 };
@@ -32,7 +33,8 @@ const WritePage = () => {
   const [file, setFile] = useState<File | null>(null);
   const [media, setMedia] = useState('');
   const [title, setTitle] = useState('');
-  const [catSlug, setCatSlug] = useState('style');
+  const [catSlug, setCatSlug] = useState('');
+  const [categories, setCategories] = useState<ICategory[]>([]);
 
   useEffect(() => {
     const redirectToHome = () => {
@@ -47,12 +49,16 @@ const WritePage = () => {
 
     redirectToHome();
   }, [router, status]);
+  useEffect(() => {
+    getAllCategories().then(data => setCategories(data));
+  }, []);
 
   useEffect(() => {
+    const storage = getStorage(app);
     const upload = () => {
       if (!file) return;
       const name = new Date().getTime + file.name;
-      const storageRef = ref(storage, file.name);
+      const storageRef = ref(storage, name);
       const uploadTask = uploadBytesResumable(storageRef, file, metadata);
 
       uploadTask.on(
@@ -116,12 +122,11 @@ const WritePage = () => {
         className={styles.select}
         onChange={e => setCatSlug(e.target.value)}
       >
-        <option value='style'>style</option>
-        <option value='fashion'>fashion</option>
-        <option value='food'>food</option>
-        <option value='culture'>culture</option>
-        <option value='travel'>travel</option>
-        <option value='coding'>coding</option>
+        {categories.map(category => (
+          <option key={category.id} value={category.slug}>
+            {category.slug}
+          </option>
+        ))}
       </select>
       <div className={styles.editor}>
         <button className={styles.button} onClick={() => setOpen(!open)}>

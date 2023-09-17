@@ -14,14 +14,17 @@ const Card = ({ key, post }: { key: string; post: IPage }) => {
       <div className={styles.textContainer}>
         <div className={styles.detail}>
           <span className={styles.date}>
-            {post.createdAt.substring(0, 10)} -
+            {post.createdAt.substring(0, 10)} -{' '}
           </span>
           <span className={styles.category}>{post.catSlug}</span>
         </div>
         <Link href={`/posts/${post.slug}`}>
           <h1>{post.title}</h1>
         </Link>
-        <p className={styles.postDesc}>{post.desc.substring(0, 60)}</p>
+        <div
+          className={styles.desc}
+          dangerouslySetInnerHTML={{ __html: post?.desc.substring(0, 60) }}
+        />
         <Link href={`/posts/${post.slug}`} className={styles.link}>
           Zobacz więcej
         </Link>

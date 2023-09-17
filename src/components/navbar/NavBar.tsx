@@ -1,6 +1,5 @@
 import React from 'react';
 import styles from './navbar.module.css';
-import Image from 'next/image';
 import Link from 'next/link';
 import AuthLinks from '../authLinks/AuthLinks';
 import ThemeToggle from '../themeToogle/ThemeToggle';
@@ -12,7 +11,9 @@ const NavBar = () => {
       <div className={styles.social}>
         <Socials />
       </div>
-      <div className={styles.logo}>from Lines to Life</div>
+      <div className={styles.logo}>
+        <Link href='/'>from Lines to Life</Link>
+      </div>
       <div className={styles.links}>
         <ThemeToggle />
         <Link href='/' className={styles.link}>
