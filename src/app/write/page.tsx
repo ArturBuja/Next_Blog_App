@@ -39,7 +39,7 @@ const WritePage = () => {
     { name: 'travel' },
     { name: 'coding' },
   ];
-  console.log('use State catSlug', catSlug);
+
   useEffect(() => {
     const redirectToHome = () => {
       if (status === 'unauthenticated') {
@@ -91,7 +91,6 @@ const WritePage = () => {
   }, [file]);
 
   const handleSubmit = async () => {
-    console.log('catSlug', catSlug);
     const res = await fetch('/api/posts', {
       method: 'POST',
       body: JSON.stringify({
