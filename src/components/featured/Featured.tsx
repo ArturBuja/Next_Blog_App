@@ -1,8 +1,11 @@
+'use client';
 import React from 'react';
 import styles from './featured.module.css';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 
 const Featured = () => {
+  const router = useRouter();
   return (
     <div className={styles.container}>
       {/* <h1 className={styles.title}>
@@ -30,7 +33,12 @@ const Featured = () => {
             kodowania, odkrywania nowych technologii lub po prostu szukasz
             inspiracji do osobistego rozwoju, to jesteś we właściwym miejscu!
           </p>
-          <button className={styles.button}>Czytaj więcej</button>
+          <button
+            onClick={() => router.push(`/posts/consoleloghello-world`)}
+            className={styles.button}
+          >
+            Czytaj więcej
+          </button>
         </div>
       </div>
     </div>
