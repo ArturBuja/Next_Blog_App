@@ -33,6 +33,7 @@
   font-size: 1.25rem;
   font-weight: 300;
   color: var(--softTextColor);
+  text-indent: 1.25rem;
 }
 .button {
   padding: 1rem 1.25rem;

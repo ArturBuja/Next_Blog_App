@@ -11,7 +11,7 @@ const Featured = () => {
       <div className={styles.post}>
         <div className={styles.imgContainer}>
           <Image
-            src={'/p1.jpeg'}
+            src={'/p1.jpg'}
             alt='Logo'
             sizes='100%'
             priority
@@ -21,16 +21,16 @@ const Featured = () => {
         </div>
         <div className={styles.textContainer}>
           <h1 className={styles.postTitle}>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ducimus,
-            velit.
+            console.log(<q>Hello world!</q>);
           </h1>
           <p className={styles.postDesc}>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Optio,
-            odit ad amet possimus vero id animi atque cumque culpa ipsam alias,
-            ratione, accusamus fugit soluta! Ab reiciendis porro velit
-            perspiciatis?
+            Dziś z niebywałą radością witam Was na moim autorskim blogu, który
+            będzie miejscem, gdzie będę dzielić się moją pasją do programowania
+            oraz nieco ciekawymi aspektami mojego życia. Jeśli jesteś fanem
+            kodowania, odkrywania nowych technologii lub po prostu szukasz
+            inspiracji do osobistego rozwoju, to jesteś we właściwym miejscu!
           </p>
-          <button className={styles.button}>Read More</button>
+          <button className={styles.button}>Czytaj więcej</button>
         </div>
       </div>
     </div>

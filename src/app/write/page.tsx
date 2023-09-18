@@ -17,15 +17,13 @@ import styles from './writePage.module.css';
 import { app } from '@/utils/firebase';
 import { slugify } from '@/utils/helpers';
 import dynamic from 'next/dynamic';
-import { getAllCategories } from '../api';
-import { ICategory } from '@/utils/api';
+const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 
 const metadata = {
   contentType: 'image/jpeg',
 };
 
 const WritePage = () => {
-  const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
   const { status } = useSession();
   const router = useRouter();
   const [open, setOpen] = useState(false);
@@ -33,9 +31,15 @@ const WritePage = () => {
   const [file, setFile] = useState<File | null>(null);
   const [media, setMedia] = useState('');
   const [title, setTitle] = useState('');
-  const [catSlug, setCatSlug] = useState('');
-  const [categories, setCategories] = useState<ICategory[]>([]);
+  const [catSlug, setCatSlug] = useState('lifestyle');
 
+  const data = [
+    { name: 'lifestyle' },
+    { name: 'food' },
+    { name: 'travel' },
+    { name: 'coding' },
+  ];
+  console.log('use State catSlug', catSlug);
   useEffect(() => {
     const redirectToHome = () => {
       if (status === 'unauthenticated') {
@@ -49,8 +53,6 @@ const WritePage = () => {
 
     redirectToHome();
   }, [router, status]);
-
-  getAllCategories().then(data => setCategories(data));
 
   useEffect(() => {
     const storage = getStorage(app);
@@ -89,6 +91,7 @@ const WritePage = () => {
   }, [file]);
 
   const handleSubmit = async () => {
+    console.log('catSlug', catSlug);
     const res = await fetch('/api/posts', {
       method: 'POST',
       body: JSON.stringify({
@@ -113,6 +116,7 @@ const WritePage = () => {
     <div className={styles.container}>
       <input
         type='text'
+        required
         className={styles.input}
         placeholder='Tytuł'
         onChange={e => setTitle(e.target.value)}
@@ -121,9 +125,9 @@ const WritePage = () => {
         className={styles.select}
         onChange={e => setCatSlug(e.target.value)}
       >
-        {categories.map(category => (
-          <option key={category.id} value={category.slug}>
-            {category.slug}
+        {data.map(category => (
+          <option key={category.name} value={category.name}>
+            {category.name}
           </option>
         ))}
       </select>

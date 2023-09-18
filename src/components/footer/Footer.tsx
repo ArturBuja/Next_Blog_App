@@ -39,7 +39,7 @@ const Footer = () => {
             Coding
           </Link>
           <Link href='/blog?cat=style' className={styles.link}>
-            Style
+            Lifestyle
           </Link>
           <Link href='/blog?cat=travel' className={styles.link}>
             Travel

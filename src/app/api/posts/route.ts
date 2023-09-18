@@ -1,6 +1,7 @@
 import { getAuthSession } from '@/utils/auth';
 import prisma from '@/utils/conenct';
 import { POST_PER_PAGE } from '@/utils/contants';
+import { Prisma } from '@prisma/client';
 import { NextResponse } from 'next/server';
 
 export const GET = async (request: Request) => {
@@ -8,13 +9,17 @@ export const GET = async (request: Request) => {
 
   const page = parseInt(searchParams.get('page') || '1');
   const cat = searchParams.get('cat');
-  const query = {
+  const query: Prisma.PostFindManyArgs = {
     take: POST_PER_PAGE,
     skip: POST_PER_PAGE * (page - 1),
     where: {
       ...(cat && { catSlug: cat }),
     },
+    orderBy: {
+      createdAt: 'desc',
+    },
   };
+
   try {
     const [posts, count] = await prisma.$transaction([
       prisma.post.findMany(query),

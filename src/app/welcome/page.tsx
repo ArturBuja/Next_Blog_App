@@ -2,32 +2,15 @@ import Menu from '@/components/menu/Menu';
 import styles from './singlePage.module.css';
 import Image from 'next/image';
 import Comments from '@/components/comments/Comments';
-import { API_URL_TEST } from '@/utils/contants';
-import { IPost } from '@/utils/api';
 
-const getData = async (slug: string): Promise<IPost | null> => {
-  const res = await fetch(`${API_URL_TEST}/posts/${slug}`, {
-    cache: 'no-cache',
-  });
-
-  if (!res.ok) {
-    throw new Error(res.statusText);
-  }
-
-  return res.json();
-};
-
-const SinglePage = async ({ params }: { params: { slug: string } }) => {
-  const { slug } = params;
-  const data = await getData(slug);
-
+const WelcomePost = async () => {
   return (
     <div className={styles.container}>
       <div className={styles.infoContainer}>
         <div className={styles.textContainer}>
-          <h1 className={styles.title}>{data?.title}</h1>
+          <h1 className={styles.title}>Lorem, ipsum.</h1>
           <div className={styles.user}>
-            {data?.user?.image && (
+            {/* {data?.user?.image && (
               <div className={styles.userImageContainer}>
                 <Image
                   alt='avatar'
@@ -36,14 +19,14 @@ const SinglePage = async ({ params }: { params: { slug: string } }) => {
                   className={styles.avatar}
                 />
               </div>
-            )}
+            )} */}
             <div className={styles.userTextContainer}>
-              <span className={styles.username}>{data?.user.name}</span>
-              <span className={styles.date}>11.10.2022</span>
+              <span className={styles.username}>Artur Buja</span>
+              <span className={styles.date}>18.09.2023</span>
             </div>
           </div>
         </div>
-        {data?.img && (
+        {/* {data?.img && (
           <div className={styles.imageContainer}>
             <Image
               alt={data?.img}
@@ -52,7 +35,7 @@ const SinglePage = async ({ params }: { params: { slug: string } }) => {
               className={styles.image}
             />
           </div>
-        )}
+        )} */}
       </div>
       <div className={styles.content}>
         <div className={styles.post}>
@@ -71,4 +54,4 @@ const SinglePage = async ({ params }: { params: { slug: string } }) => {
   );
 };
 
-export default SinglePage;
+export default WelcomePost;

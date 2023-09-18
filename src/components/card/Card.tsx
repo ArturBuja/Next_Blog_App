@@ -23,7 +23,9 @@ const Card = ({ key, post }: { key: string; post: IPage }) => {
         </Link>
         <div
           className={styles.desc}
-          dangerouslySetInnerHTML={{ __html: post?.desc.substring(0, 60) }}
+          dangerouslySetInnerHTML={{
+            __html: `${post?.desc.substring(0, 60)}&hellip;`,
+          }}
         />
         <Link href={`/posts/${post.slug}`} className={styles.link}>
           Zobacz więcej

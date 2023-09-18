@@ -20,7 +20,7 @@ import { API_URL_TEST } from '@/utils/contants';
 const MenuPopular = async () => {
   return (
     <div className={styles.items}>
-      <p className={styles.text}>Brak najpopularniejszych postów</p>
+      <p className={styles.text}>Brak najbardziej lubionych postów</p>
       {/* {data.map((post: IPage) => (
         <Link
           href={`/posts/${post.slug}`}

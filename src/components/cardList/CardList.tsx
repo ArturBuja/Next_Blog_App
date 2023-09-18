@@ -34,7 +34,7 @@ const CardList = async ({ page, cat }: { page: number; cat?: string }) => {
       <h1 className={styles.title}>Ostatnie posty</h1>
       <div className={styles.posts}>
         {posts.length > 0 ? (
-          posts?.map(post => <Card key={post.id} post={post} />)
+          posts.map(post => <Card key={post.id} post={post} />)
         ) : (
           <p style={{ textAlign: 'center' }}>Aktualnie brak postów</p>
         )}
