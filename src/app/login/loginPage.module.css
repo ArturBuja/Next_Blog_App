@@ -35,13 +35,13 @@
   background-color: #087bea;
 }
 
-@media screen and (max-wifht: 768px) {
+@media screen and (max-width: 768px) {
   .wrapper {
     padding: 3.125rem 6.25rem;
   }
 }
 
-@media screen and (max-wifht: 640px) {
+@media screen and (max-width: 640px) {
   .wrapper {
     padding: 1.875rem;
   }

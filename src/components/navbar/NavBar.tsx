@@ -6,6 +6,7 @@ import ThemeToggle from '../themeToogle/ThemeToggle';
 import Socials from '../organism/Socials';
 
 const NavBar = () => {
+  const email = process.env.ADMIN_EMAIL || '';
   return (
     <div className={styles.container}>
       <div className={styles.social}>
@@ -25,7 +26,7 @@ const NavBar = () => {
         <Link href='/about' className={styles.link}>
           O mnie
         </Link>
-        <AuthLinks />
+        <AuthLinks email={email} />
       </div>
     </div>
   );

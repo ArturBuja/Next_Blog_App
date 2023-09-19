@@ -30,10 +30,10 @@ const LoginPage = () => {
     <div className={styles.container}>
       <div className={styles.wrapper}>
         <div className={styles.socialButton} onClick={() => signIn('google')}>
-          Sing in with Google
+          Zaloguj przez Google
         </div>
-        <div className={styles.socialButton}>Sing in with Github</div>
-        <div className={styles.socialButton}>Sing in with Facebook</div>
+        <div className={styles.socialButton}>Zaloguj przez Github</div>
+        <div className={styles.socialButton}>Zaloguj przez Facebook</div>
       </div>
     </div>
   );

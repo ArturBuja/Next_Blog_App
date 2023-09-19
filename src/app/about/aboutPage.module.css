@@ -30,6 +30,39 @@
   font-size: 1.25rem;
   font-weight: 300;
   margin-bottom: 1.25rem;
-
   text-align: justify;
+}
+
+/* MEDIA */
+@media screen and (max-width: 1536px) {
+  .title {
+    font-size: 3.375rem;
+  }
+}
+
+@media screen and (max-width: 1280px) {
+  .title {
+    font-size: 3rem;
+  }
+  .text {
+    font-size: 1.125rem;
+  }
+}
+@media screen and (max-width: 1024px) {
+  .imageContainer {
+    display: none;
+  }
+  .title {
+    margin-bottom: 2rem;
+  }
+}
+
+@media screen and (max-width: 640px) {
+  .title {
+    font-size: 2.25rem;
+  }
+  .text {
+    text-align: left;
+    font-size: 1rem;
+  }
 }

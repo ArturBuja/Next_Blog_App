@@ -4,14 +4,14 @@ import { signOut, useSession } from 'next-auth/react';
 import styles from './authLinks.module.css';
 import Link from 'next/link';
 
-const AuthLinks = () => {
+const AuthLinks = ({ email }: { email: string }) => {
   const [open, setOpen] = useState(false);
   const { status, data } = useSession();
   const linesStyle = useMemo(
     () => `${styles.line} ${open ? styles.open : styles.closed}`,
     [open]
   );
-
+  console.log(email);
   return (
     <>
       {status === 'unauthenticated' ? (
@@ -20,7 +20,7 @@ const AuthLinks = () => {
         </Link>
       ) : (
         <>
-          {data?.user?.email === 'artur.buja2@gmail.com' && (
+          {data?.user?.email === email && (
             <Link href='/write' className={styles.link}>
               Napisz
             </Link>
@@ -58,7 +58,7 @@ const AuthLinks = () => {
                 </Link>
               )}
               <span
-                className={styles.link}
+                className={`${styles.link} ${styles.logout}`}
                 onClick={() => {
                   signOut();
                   setOpen(false);
