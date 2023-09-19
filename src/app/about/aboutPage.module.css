@@ -1,0 +1,35 @@
+.container {
+  background-color: var(--softBg);
+  border-radius: 1.25rem;
+  padding-bottom: 1.875rem;
+  padding-top: 1.875rem;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+.title {
+  font-size: 4rem;
+  font-weight: 500;
+}
+.imageContainer {
+  position: 'relative';
+  min-height: 25rem;
+  aspect-ratio: 3/4;
+  position: relative;
+  margin-top: 3rem;
+  margin-bottom: 2rem;
+}
+.image {
+  object-fit: cover;
+  border-radius: 0.625rem;
+}
+.textContainer {
+  width: 80%;
+}
+.text {
+  font-size: 1.25rem;
+  font-weight: 300;
+  margin-bottom: 1.25rem;
+
+  text-align: justify;
+}
