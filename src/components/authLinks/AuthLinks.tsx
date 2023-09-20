@@ -11,7 +11,7 @@ const AuthLinks = ({ email }: { email: string }) => {
     () => `${styles.line} ${open ? styles.open : styles.closed}`,
     [open]
   );
-  console.log(email);
+
   return (
     <>
       {status === 'unauthenticated' ? (

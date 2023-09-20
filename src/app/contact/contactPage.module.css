@@ -1,0 +1,67 @@
+.container {
+  background-color: var(--softBg);
+  border-radius: 1.25rem;
+  padding-bottom: 1.875rem;
+  padding-top: 1.875rem;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  width: 90%;
+}
+.inputsContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.inputContainer {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+.input {
+  border: none;
+  width: max-content;
+  border-radius: 0.625rem;
+  padding: 0.625rem;
+  outline: none;
+  text-align: center;
+}
+.message {
+  min-height: 18.75rem;
+  text-align: left;
+  width: 100%;
+  max-width: 100%;
+}
+.button {
+  padding: 0.625rem 1.25rem;
+  border: none;
+  background-color: #1a8917;
+  color: #fff;
+  cursor: pointer;
+  border-radius: 20px;
+  width: max-content;
+  align-self: flex-end;
+}
+.inputError {
+  margin: 0.625rem 0;
+  color: #ff0033;
+  font-family: 'Montserrat', monospace;
+  font-size: 0.8em;
+  font-weight: 500;
+  letter-spacing: 0.15em;
+  min-height: 1rem;
+}
+
+@media screen and (max-width: 768px) {
+  .inputsContainer {
+    flex-direction: column;
+  }
+  .input {
+    width: 100%;
+  }
+}
