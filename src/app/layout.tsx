@@ -7,24 +7,8 @@ import { ThemeContextProvider } from '@/context/ThemeContext';
 import ThemeProvider from '@/providers/ThemeProvider';
 import AuthProvider from '@/providers/AuthProvider';
 import { Metadata } from 'next';
-import { headers } from 'next/headers';
-import { Session } from 'next-auth';
 
 const inter = Inter({ subsets: ['latin'] });
-
-async function getSession(cookie: string): Promise<Session> {
-  const response = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_URL}/api/auth/session`,
-    {
-      headers: {
-        cookie,
-      },
-    }
-  );
-  const session = await response.json();
-
-  return Object.keys(session).length > 0 ? session : null;
-}
 
 export const metadata: Metadata = {
   title: 'From Lines To Life',
@@ -36,11 +20,10 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const session = await getSession(headers().get('cookie') ?? '');
   return (
     <html lang='en'>
       <body className={inter.className}>
-        <AuthProvider session={session}>
+        <AuthProvider>
           <ThemeContextProvider>
             <ThemeProvider>
               <div className='container'>
