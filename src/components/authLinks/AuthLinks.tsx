@@ -34,7 +34,6 @@ const AuthLinks = ({ email }: { email: string }) => {
             className={styles.link}
             onClick={() => {
               signOut();
-              handleToggleBurgerMenu();
             }}
           >
             Wyloguj
