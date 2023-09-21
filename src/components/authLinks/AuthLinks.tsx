@@ -12,6 +12,11 @@ const AuthLinks = ({ email }: { email: string }) => {
     [open]
   );
 
+  const handleToggleBurgerMenu = () => {
+    document.body.style.overflowY = open ? 'initial' : 'hidden';
+    setOpen(!open);
+  };
+
   return (
     <>
       {status === 'unauthenticated' ? (
@@ -25,35 +30,41 @@ const AuthLinks = ({ email }: { email: string }) => {
               Napisz
             </Link>
           )}
-          <span className={styles.link} onClick={() => signOut()}>
+          <span
+            className={styles.link}
+            onClick={() => {
+              signOut();
+              handleToggleBurgerMenu();
+            }}
+          >
             Wyloguj
           </span>
         </>
       )}
-      <div onClick={() => setOpen(!open)} className={styles.burger}>
+      <div onClick={handleToggleBurgerMenu} className={styles.burger}>
         <div className={linesStyle}></div>
         <div className={linesStyle}></div>
         <div className={linesStyle}></div>
       </div>
       {open && (
         <div className={styles.responsiveMenu}>
-          <Link onClick={() => setOpen(false)} href='/'>
+          <Link onClick={handleToggleBurgerMenu} href='/'>
             Strona Główna
           </Link>
-          <Link onClick={() => setOpen(false)} href='/contact'>
+          <Link onClick={handleToggleBurgerMenu} href='/contact'>
             Kontakt
           </Link>
-          <Link onClick={() => setOpen(false)} href='/about'>
+          <Link onClick={handleToggleBurgerMenu} href='/about'>
             O mnie
           </Link>
           {status === 'unauthenticated' ? (
-            <Link onClick={() => setOpen(false)} href='/login'>
+            <Link onClick={handleToggleBurgerMenu} href='/login'>
               Zaloguj
             </Link>
           ) : (
             <>
               {data?.user?.email === 'artur.buja2@gmail.com' && (
-                <Link onClick={() => setOpen(false)} href='/write'>
+                <Link onClick={handleToggleBurgerMenu} href='/write'>
                   Napisz
                 </Link>
               )}
@@ -61,7 +72,7 @@ const AuthLinks = ({ email }: { email: string }) => {
                 className={`${styles.link} ${styles.logout}`}
                 onClick={() => {
                   signOut();
-                  setOpen(false);
+                  handleToggleBurgerMenu();
                 }}
               >
                 Wyloguj

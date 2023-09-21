@@ -32,8 +32,12 @@ const LoginPage = () => {
         <div className={styles.socialButton} onClick={() => signIn('google')}>
           Zaloguj przez Google
         </div>
-        <div className={styles.socialButton}>Zaloguj przez Github</div>
-        <div className={styles.socialButton}>Zaloguj przez Facebook</div>
+        <div className={styles.socialButton} onClick={() => signIn('github')}>
+          Zaloguj przez Github
+        </div>
+        <div className={styles.socialButton} onClick={() => signIn('facebook')}>
+          Zaloguj przez Facebook
+        </div>
       </div>
     </div>
   );

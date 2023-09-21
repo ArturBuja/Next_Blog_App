@@ -39,15 +39,14 @@ a {
 .ql-container.ql-bubble {
   font-size: 1.75rem;
 }
-/* .ql-container {
-  font-size: 1.75rem !important;
-} */
-/* .quill > .ql-container > .ql-editor.ql-blank::before {
-  color: var(--softTextColor);
-} */
+
 div.ql-editor.ql-blank::before {
   color: var(--softTextColor);
   padding-top: 3%;
+}
+
+.lock-scroll {
+  overflow: hidden;
 }
 
 /* MEDIA */
