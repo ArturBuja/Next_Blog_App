@@ -4,6 +4,8 @@ import Image from 'next/image';
 import Comments from '@/components/comments/Comments';
 import { API_URL_TEST } from '@/utils/contants';
 import { IPost } from '@/utils/api';
+import Like from '@/components/organism/Like';
+import prisma from '@/utils/conenct';
 
 const getData = async (slug: string): Promise<IPost | null> => {
   const res = await fetch(`${API_URL_TEST}/posts/${slug}`, {
@@ -17,9 +19,24 @@ const getData = async (slug: string): Promise<IPost | null> => {
   return res.json();
 };
 
+const checkIfUserLikedPost = async (userId: string, postId: string) => {
+  const like = await prisma.like.findFirst({
+    where: {
+      postId,
+      userId,
+      liked: true,
+    },
+  });
+
+  return like !== null; // If 'like' is not null, the user liked the post; otherwise, they didn't.
+};
 const SinglePage = async ({ params }: { params: { slug: string } }) => {
   const { slug } = params;
   const data = await getData(slug);
+  const isLiked = await checkIfUserLikedPost(
+    data?.user?.id ?? '',
+    data?.id ?? ''
+  );
 
   return (
     <div className={styles.container}>
@@ -62,7 +79,14 @@ const SinglePage = async ({ params }: { params: { slug: string } }) => {
             className={styles.description}
             dangerouslySetInnerHTML={{ __html: data?.desc || '' }}
           />
-
+          <div>
+            <Like
+              postId={data?.id ?? ''}
+              likes={data?.likes ?? 0}
+              isLiked={isLiked}
+              userId={data?.user?.id ?? ''}
+            />
+          </div>
           <div className={styles.comment}>
             <Comments postSlug={slug} />
           </div>

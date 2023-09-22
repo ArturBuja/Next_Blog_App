@@ -47,6 +47,7 @@ model User {
   sessions      Session[]
   Post Post[]
   Comment Comment[]
+  likesList Like[]
 }
 
 model VerificationToken {
@@ -79,6 +80,7 @@ model Post {
   userEmail String
   user User @relation(fields: [userEmail], references: [email])
   comments Comment[]
+  likesList Like[]
 }
 
 model Comment {
@@ -89,4 +91,16 @@ model Comment {
   user User @relation(fields: [userEmail], references: [email])
   postSlug String
   post Post @relation(fields: [postSlug], references: [slug])
+}
+model Like {
+  id        String  @id @default(cuid()) @map("_id")
+  postId    String
+  userId    String
+  liked     Boolean
+  createdAt DateTime @default(now())
+
+  post   Post   @relation(fields: [postId], references: [id])
+  user   User   @relation(fields: [userId], references: [id])
+
+  @@unique([postId, userId])
 }
