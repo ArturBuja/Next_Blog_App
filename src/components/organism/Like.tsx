@@ -8,20 +8,21 @@ import prisma from '@/utils/conenct';
 interface IProps {
   isLiked: boolean;
   likes: number;
-  postId: string;
-  userId: string;
+  postSlug: string;
+  userEmail: string;
 }
 
-const Like = ({ isLiked, likes, postId, userId }: IProps) => {
+const Like = ({ isLiked, likes, postSlug, userEmail }: IProps) => {
   const { theme } = useContext(ThemeContext);
 
   const handleLikeClick = async () => {
+    console.log('object', postSlug);
     const res = await fetch('/api/likes', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ postId, userId }),
+      body: JSON.stringify({ postSlug, userEmail }),
     });
     console.log(res);
   };

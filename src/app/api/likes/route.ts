@@ -11,13 +11,16 @@ export const POST = async req => {
     });
   }
 
-  const { postId, userId } = req.body;
+  const body = await req.json();
+  const { postSlug, userEmail } = body;
+  console.log('postSlug', postSlug, userEmail);
 
   try {
-    const existingLike = await prisma.like.findUnique({
+    const existingLike = await prisma.like.findFirst({
       where: {
-        postId: postId,
-        userId: userId,
+        postSlug: postSlug,
+        userEmail: userEmail,
+        liked: true,
       },
     });
 
@@ -32,7 +35,7 @@ export const POST = async req => {
       // Aktualizacja liczby polubień w poście.
       await prisma.post.update({
         where: {
-          id: postId,
+          id: postSlug,
         },
         data: {
           likes: {
@@ -50,15 +53,15 @@ export const POST = async req => {
     } else {
       await prisma.like.create({
         data: {
-          postId: postId,
-          userId: session.user.id,
+          postSlug: postSlug,
+          userEmail: userEmail,
           liked: true,
         },
       });
 
       await prisma.post.update({
         where: {
-          id: postId,
+          id: postSlug,
         },
         data: {
           likes: {

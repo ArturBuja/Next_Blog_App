@@ -3,9 +3,9 @@ import styles from './card.module.css';
 import Link from 'next/link';
 import { IPage } from '@/utils/api';
 
-const Card = ({ key, post }: { key: string; post: IPage }) => {
+const Card = ({ post }: { post: IPage }) => {
   return (
-    <div className={styles.container} key={key}>
+    <div className={styles.container}>
       {post.img ? (
         <div className={styles.imageContainer}>
           <Image src={post.img} alt={post.img} fill className={styles.image} />

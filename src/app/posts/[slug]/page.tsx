@@ -81,10 +81,10 @@ const SinglePage = async ({ params }: { params: { slug: string } }) => {
           />
           <div>
             <Like
-              postId={data?.id ?? ''}
+              postSlug={data?.slug ?? ''}
               likes={data?.likes ?? 0}
               isLiked={isLiked}
-              userId={data?.user?.id ?? ''}
+              userEmail={data?.user?.email ?? ''}
             />
           </div>
           <div className={styles.comment}>
