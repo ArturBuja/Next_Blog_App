@@ -94,13 +94,13 @@ model Comment {
 }
 model Like {
   id        String  @id @default(cuid()) @map("_id")
-  postId    String
-  userId    String
+  postSlug    String
+  userEmail    String
   liked     Boolean
   createdAt DateTime @default(now())
 
-  post   Post   @relation(fields: [postId], references: [id])
-  user   User   @relation(fields: [userId], references: [id])
+  post   Post   @relation(fields: [postSlug], references: [slug])
+  user   User   @relation(fields: [userEmail], references: [email])
 
-  @@unique([postId, userId])
+  @@unique([postSlug, userEmail])
 }

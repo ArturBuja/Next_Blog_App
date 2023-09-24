@@ -19,11 +19,11 @@ const getData = async (slug: string): Promise<IPost | null> => {
   return res.json();
 };
 
-const checkIfUserLikedPost = async (userId: string, postId: string) => {
+const checkIfUserLikedPost = async (userEmail: string, postSlug: string) => {
   const like = await prisma.like.findFirst({
     where: {
-      postId,
-      userId,
+      postSlug,
+      userEmail,
       liked: true,
     },
   });
@@ -34,8 +34,8 @@ const SinglePage = async ({ params }: { params: { slug: string } }) => {
   const { slug } = params;
   const data = await getData(slug);
   const isLiked = await checkIfUserLikedPost(
-    data?.user?.id ?? '',
-    data?.id ?? ''
+    data?.user?.email ?? '',
+    data?.slug ?? ''
   );
 
   return (
