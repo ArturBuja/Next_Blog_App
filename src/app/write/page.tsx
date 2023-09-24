@@ -1,22 +1,22 @@
 'use client';
 import { useEffect, useState } from 'react';
-
+//extensions
 import {
   getStorage,
   ref,
   uploadBytesResumable,
   getDownloadURL,
 } from 'firebase/storage';
-
+import 'react-quill/dist/quill.bubble.css';
 import Image from 'next/image';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
-
-import 'react-quill/dist/quill.bubble.css';
+import dynamic from 'next/dynamic';
+//styles
 import styles from './writePage.module.css';
+//utils
 import { app } from '@/utils/firebase';
 import { slugify } from '@/utils/helpers';
-import dynamic from 'next/dynamic';
 const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 
 const metadata = {
@@ -32,6 +32,10 @@ const WritePage = () => {
   const [media, setMedia] = useState('');
   const [title, setTitle] = useState('');
   const [catSlug, setCatSlug] = useState('lifestyle');
+  const [hasError, setHasError] = useState({
+    error: false,
+    message: '',
+  });
 
   const data = [
     { name: 'lifestyle' },
@@ -91,6 +95,13 @@ const WritePage = () => {
   }, [file]);
 
   const handleSubmit = async () => {
+    if (!title || !value) {
+      setHasError({
+        error: true,
+        message: 'Wypełnij wszystkie pola',
+      });
+      return;
+    }
     const res = await fetch('/api/posts', {
       method: 'POST',
       body: JSON.stringify({
@@ -104,6 +115,11 @@ const WritePage = () => {
     if (res.status === 200) {
       const data = await res.json();
       router.push(`/posts/${data.slug}`);
+    } else {
+      setHasError({
+        error: true,
+        message: res.statusText,
+      });
     }
   };
 
@@ -119,6 +135,7 @@ const WritePage = () => {
         className={styles.input}
         placeholder='Tytuł'
         onChange={e => setTitle(e.target.value)}
+        onFocus={() => setHasError({ error: false, message: '' })}
       />
       <select
         className={styles.select}
@@ -130,6 +147,7 @@ const WritePage = () => {
           </option>
         ))}
       </select>
+      {hasError.error && <p className='error'>{hasError.message}</p>}
       <div className={styles.editor}>
         <button className={styles.button} onClick={() => setOpen(!open)}>
           <Image src={'/plus.png'} alt='' width={16} height={16} />
@@ -179,6 +197,7 @@ const WritePage = () => {
           value={value}
           onChange={setValue}
           placeholder='Napisz swoja historię..'
+          onFocus={() => setHasError({ error: false, message: '' })}
         />
       </div>
       <button className={styles.publish} onClick={handleSubmit}>

@@ -48,6 +48,15 @@ div.ql-editor.ql-blank::before {
 .lock-scroll {
   overflow: hidden;
 }
+.error {
+  margin: 0.625rem 0;
+  color: #ff0033;
+  font-family: 'Montserrat', monospace;
+  font-size: 0.8em;
+  font-weight: 500;
+  letter-spacing: 0.15em;
+  min-height: 1rem;
+}
 
 /* MEDIA */
 
