@@ -75,8 +75,7 @@ const Comments = ({ postSlug }: { postSlug: string }) => {
                   <div className={styles.userInfo}>
                     <span className={styles.username}>{comment.user.name}</span>
                     <span className={styles.date}>
-                      {comment.createdAt.substring(0, 10)}{' '}
-                      {comment.createdAt.substring(11, 20)}
+                      {new Date(comment.createdAt).toLocaleString()}
                     </span>
                   </div>
                 </div>
