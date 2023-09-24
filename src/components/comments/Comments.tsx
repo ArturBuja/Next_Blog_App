@@ -60,33 +60,28 @@ const Comments = ({ postSlug }: { postSlug: string }) => {
       <div className={styles.comments}>
         {isLoading
           ? 'Ładowanie'
-          : data?.map(comment => {
-              console.log(new Date(comment.createdAt).toLocaleString());
-              return (
-                <div className={styles.comment} key={comment.id}>
-                  <div className={styles.user}>
-                    {comment?.user?.image && (
-                      <Image
-                        alt='avatar'
-                        src={comment.user.image}
-                        width={50}
-                        height={50}
-                        className={styles.image}
-                      />
-                    )}
-                    <div className={styles.userInfo}>
-                      <span className={styles.username}>
-                        {comment.user.name}
-                      </span>
-                      <span className={styles.date}>
-                        {new Date(comment.createdAt).toLocaleString()}
-                      </span>
-                    </div>
+          : data?.map(comment => (
+              <div className={styles.comment} key={comment.id}>
+                <div className={styles.user}>
+                  {comment?.user?.image && (
+                    <Image
+                      alt='avatar'
+                      src={comment.user.image}
+                      width={50}
+                      height={50}
+                      className={styles.image}
+                    />
+                  )}
+                  <div className={styles.userInfo}>
+                    <span className={styles.username}>{comment.user.name}</span>
+                    <span className={styles.date}>
+                      {new Date(comment.createdAt).toLocaleString()}
+                    </span>
                   </div>
-                  <p className={styles.desc}>{comment.desc}</p>
                 </div>
-              );
-            })}
+                <p className={styles.desc}>{comment.desc}</p>
+              </div>
+            ))}
       </div>
     </div>
   );
