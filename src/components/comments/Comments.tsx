@@ -28,32 +28,50 @@ const Comments = ({ postSlug }: { postSlug: string }) => {
     fetcher
   );
   const [desc, setDesc] = useState('');
+  const [hasError, setHasError] = useState({
+    error: false,
+    message: '',
+  });
   const handleSubmit = async () => {
-    await fetch(`/api/comments`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ desc, postSlug }),
-    });
-    mutate();
-    setDesc('');
+    try {
+      if (!desc.trim()) {
+        throw new Error('Pole komentarza nie może być puste');
+      }
+      await fetch(`/api/comments`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ desc, postSlug }),
+      });
+      mutate();
+      setDesc('');
+    } catch (error) {
+      setHasError({
+        error: true,
+        message: (error as Error).message ?? 'Wystąpił błąd, spróbuj ponownie',
+      });
+    }
   };
   return (
     <div className={styles.container}>
       <h1 className={styles.title}>Komentarze</h1>
       {status === 'authenticated' ? (
-        <div className={styles.write}>
-          <textarea
-            placeholder='Napisz komentarz...'
-            className={styles.input}
-            value={desc}
-            onChange={e => setDesc(e.target.value)}
-          />
-          <button className={styles.button} onClick={handleSubmit}>
-            Dodaj
-          </button>
-        </div>
+        <>
+          <div className={styles.write}>
+            <textarea
+              placeholder='Napisz komentarz...'
+              className={styles.input}
+              value={desc}
+              onChange={e => setDesc(e.target.value)}
+              onFocus={() => setHasError({ error: false, message: '' })}
+            />
+            <button className={styles.button} onClick={handleSubmit}>
+              Dodaj
+            </button>
+          </div>
+          {hasError.error && <div className='error'>{hasError.message}</div>}
+        </>
       ) : (
         <Link href='/login'>Zaloguj się aby dodawać komentarze</Link>
       )}
