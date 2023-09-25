@@ -2,7 +2,7 @@
 import { useContext } from 'react';
 import { useSession } from 'next-auth/react';
 import Image from 'next/image';
-import useSWR from 'swr';
+import useSWR, { KeyedMutator } from 'swr';
 
 //stlyes
 import styles from './likeIcon.module.css';
@@ -25,13 +25,9 @@ interface IResponse {
     userEmail: string;
   }[];
 }
-
-const fetcher = async (url: string) => {
-  const res = await fetch(url);
-  const data = await res.json();
-  if (!res.ok) {
-    throw new Error(data.message);
-  }
+const fetchLikes = async (url: string) => {
+  const response = await fetch(url);
+  const data = await response.json();
   return data;
 };
 
@@ -42,22 +38,24 @@ const Like = ({ postSlug, userEmail }: IProps) => {
   const {
     data,
     mutate,
-    isLoading,
+    isValidating,
   }: {
     data: {
       isLiked: boolean;
       likes: IResponse[];
     };
-    isLoading: boolean;
-    mutate: () => void;
+    mutate: KeyedMutator<IResponse>;
+    isValidating: boolean;
   } = useSWR(
     `${API_URL_TEST}/likes?postSlug=${postSlug}&userEmail=${userEmail}`,
-    fetcher
+    fetchLikes
   );
 
   const handleLikeClick = async () => {
-    if (status !== 'authenticated')
-      return alert('Musisz być zalogowany, aby polubić post');
+    if (status !== 'authenticated') {
+      alert('Musisz być zalogowany, aby polubić post');
+      return;
+    }
     try {
       await fetch('/api/likes', {
         method: 'POST',
@@ -74,7 +72,7 @@ const Like = ({ postSlug, userEmail }: IProps) => {
 
   return (
     <div className={styles.container}>
-      {isLoading ? (
+      {isValidating ? (
         <div className={styles.loading}>Ładowanie...</div>
       ) : (
         <div className={styles.wrapper}>
