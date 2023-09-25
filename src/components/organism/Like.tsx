@@ -25,13 +25,9 @@ interface IResponse {
     userEmail: string;
   }[];
 }
-
-const fetcher = async (url: string) => {
-  const res = await fetch(url);
-  const data = await res.json();
-  if (!res.ok) {
-    throw new Error(data.message);
-  }
+const fetchLikes = async (url: string) => {
+  const response = await fetch(url);
+  const data = await response.json();
   return data;
 };
 
@@ -39,25 +35,16 @@ const Like = ({ postSlug, userEmail }: IProps) => {
   const { theme } = useContext(ThemeContext);
   const { status } = useSession();
 
-  const {
-    data,
-    mutate,
-    isLoading,
-  }: {
-    data: {
-      isLiked: boolean;
-      likes: IResponse[];
-    };
-    isLoading: boolean;
-    mutate: () => void;
-  } = useSWR(
+  const { data, mutate, isValidating } = useSWR(
     `${API_URL_TEST}/likes?postSlug=${postSlug}&userEmail=${userEmail}`,
-    fetcher
+    fetchLikes
   );
 
   const handleLikeClick = async () => {
-    if (status !== 'authenticated')
-      return alert('Musisz być zalogowany, aby polubić post');
+    if (status !== 'authenticated') {
+      alert('Musisz być zalogowany, aby polubić post');
+      return;
+    }
     try {
       await fetch('/api/likes', {
         method: 'POST',
@@ -74,7 +61,7 @@ const Like = ({ postSlug, userEmail }: IProps) => {
 
   return (
     <div className={styles.container}>
-      {isLoading ? (
+      {isValidating ? (
         <div className={styles.loading}>Ładowanie...</div>
       ) : (
         <div className={styles.wrapper}>
