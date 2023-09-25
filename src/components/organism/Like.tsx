@@ -1,50 +1,100 @@
 'use client';
+import { useContext } from 'react';
+import { useSession } from 'next-auth/react';
 import Image from 'next/image';
+import useSWR from 'swr';
+
+//stlyes
 import styles from './likeIcon.module.css';
-import { useContext, useEffect, useState } from 'react';
+//context
 import { ThemeContext } from '@/context/ThemeContext';
-import prisma from '@/utils/conenct';
+//utils
+import { API_URL_TEST } from '@/utils/contants';
 
 interface IProps {
+  postSlug: string | null;
+  userEmail: string | null;
+}
+interface IResponse {
   isLiked: boolean;
-  likes: number;
-  postSlug: string;
-  userEmail: string;
+  likes: {
+    createdAt: string;
+    id: string;
+    liked: boolean;
+    postSlug: string;
+    userEmail: string;
+  }[];
 }
 
-const Like = ({ isLiked, likes, postSlug, userEmail }: IProps) => {
+const fetcher = async (url: string) => {
+  const res = await fetch(url);
+  const data = await res.json();
+  if (!res.ok) {
+    throw new Error(data.message);
+  }
+  return data;
+};
+
+const Like = ({ postSlug, userEmail }: IProps) => {
   const { theme } = useContext(ThemeContext);
+  const { status } = useSession();
+
+  const {
+    data,
+    mutate,
+    isLoading,
+  }: {
+    data: {
+      isLiked: boolean;
+      likes: IResponse[];
+    };
+    isLoading: boolean;
+    mutate: () => void;
+  } = useSWR(
+    `${API_URL_TEST}/likes?postSlug=${postSlug}&userEmail=${userEmail}`,
+    fetcher
+  );
 
   const handleLikeClick = async () => {
-    console.log('object', postSlug);
-    const res = await fetch('/api/likes', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ postSlug, userEmail }),
-    });
-    console.log(res);
+    if (status !== 'authenticated')
+      return alert('Musisz być zalogowany, aby polubić post');
+    try {
+      await fetch('/api/likes', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ postSlug, userEmail }),
+      });
+      mutate();
+    } catch (error) {
+      console.warn(error);
+    }
   };
+
   return (
     <div className={styles.container}>
-      <div className={styles.wrapper}>
-        <div className={styles.counter}>{likes}</div>
-        <div className={styles.icon} onClick={handleLikeClick}>
-          <Image
-            src={
-              isLiked
-                ? '/like.png'
-                : theme === 'light'
-                ? '/like-outline.png'
-                : '/like-outline-white.png'
-            }
-            alt='like'
-            width={28}
-            height={28}
-          />
+      {isLoading ? (
+        <div className={styles.loading}>Ładowanie...</div>
+      ) : (
+        <div className={styles.wrapper}>
+          <div className={styles.counter}>{data.likes.length}</div>
+          <div className={styles.icon} onClick={handleLikeClick}>
+            <Image
+              src={
+                data?.isLiked
+                  ? '/like.png'
+                  : theme === 'light'
+                  ? '/like-outline.png'
+                  : '/like-outline-white.png'
+              }
+              alt='like'
+              width={28}
+              height={28}
+            />
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 };

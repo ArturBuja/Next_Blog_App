@@ -1,11 +1,15 @@
-import Menu from '@/components/menu/Menu';
-import styles from './singlePage.module.css';
 import Image from 'next/image';
-import Comments from '@/components/comments/Comments';
-import { API_URL_TEST } from '@/utils/contants';
-import { IPost } from '@/utils/api';
+
+//components
+import Menu from '@/components/menu/Menu';
 import Like from '@/components/organism/Like';
-import prisma from '@/utils/conenct';
+import Comments from '@/components/comments/Comments';
+//styles
+import styles from './singlePage.module.css';
+//utils
+import { API_URL_TEST } from '@/utils/contants';
+import { getAuthSession } from '@/utils/auth';
+import { IPost } from '@/utils/api';
 
 const getData = async (slug: string): Promise<IPost | null> => {
   const res = await fetch(`${API_URL_TEST}/posts/${slug}`, {
@@ -19,24 +23,11 @@ const getData = async (slug: string): Promise<IPost | null> => {
   return res.json();
 };
 
-const checkIfUserLikedPost = async (userEmail: string, postSlug: string) => {
-  const like = await prisma.like.findFirst({
-    where: {
-      postSlug,
-      userEmail,
-      liked: true,
-    },
-  });
-
-  return like !== null; // If 'like' is not null, the user liked the post; otherwise, they didn't.
-};
 const SinglePage = async ({ params }: { params: { slug: string } }) => {
+  const session = await getAuthSession();
+
   const { slug } = params;
   const data = await getData(slug);
-  const isLiked = await checkIfUserLikedPost(
-    data?.user?.email ?? '',
-    data?.slug ?? ''
-  );
 
   return (
     <div className={styles.container}>
@@ -81,10 +72,8 @@ const SinglePage = async ({ params }: { params: { slug: string } }) => {
           />
           <div>
             <Like
-              postSlug={data?.slug ?? ''}
-              likes={data?.likes ?? 0}
-              isLiked={isLiked}
-              userEmail={data?.user?.email ?? ''}
+              postSlug={slug ?? null}
+              userEmail={session?.user?.email ?? null}
             />
           </div>
           <div className={styles.comment}>
