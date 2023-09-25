@@ -2,7 +2,7 @@
 import { useContext } from 'react';
 import { useSession } from 'next-auth/react';
 import Image from 'next/image';
-import useSWR from 'swr';
+import useSWR, { KeyedMutator } from 'swr';
 
 //stlyes
 import styles from './likeIcon.module.css';
@@ -35,7 +35,18 @@ const Like = ({ postSlug, userEmail }: IProps) => {
   const { theme } = useContext(ThemeContext);
   const { status } = useSession();
 
-  const { data, mutate, isValidating } = useSWR(
+  const {
+    data,
+    mutate,
+    isValidating,
+  }: {
+    data: {
+      isLiked: boolean;
+      likes: IResponse[];
+    };
+    mutate: KeyedMutator<IResponse>;
+    isValidating: boolean;
+  } = useSWR(
     `${API_URL_TEST}/likes?postSlug=${postSlug}&userEmail=${userEmail}`,
     fetchLikes
   );
