@@ -1,5 +1,5 @@
 'use client';
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import { useSession } from 'next-auth/react';
 import Image from 'next/image';
 import useSWR from 'swr';
@@ -10,7 +10,7 @@ import styles from './likeIcon.module.css';
 import { ThemeContext } from '@/context/ThemeContext';
 //utils
 import { API_URL_TEST } from '@/utils/contants';
-import Loading from '@/app/loading';
+import Loading from '../molecues/LikeLoader/LikeLoadIndicator';
 
 interface IProps {
   postSlug: string | null;
@@ -39,12 +39,12 @@ const fetcher = async (url: string) => {
 const Like = ({ postSlug, userEmail }: IProps) => {
   const { theme } = useContext(ThemeContext);
   const { status } = useSession();
+  const [isValidating, setIsValidating] = useState(false);
 
   const {
     data,
     mutate,
     isLoading,
-    isValidating,
   }: {
     data: {
       isLiked: boolean;
@@ -62,7 +62,7 @@ const Like = ({ postSlug, userEmail }: IProps) => {
     if (status !== 'authenticated')
       return alert('Musisz być zalogowany, aby polubić post');
     try {
-      mutate();
+      setIsValidating(true);
       await fetch('/api/likes', {
         method: 'POST',
         headers: {
@@ -70,6 +70,8 @@ const Like = ({ postSlug, userEmail }: IProps) => {
         },
         body: JSON.stringify({ postSlug, userEmail }),
       });
+      mutate();
+      setIsValidating(false);
     } catch (error) {
       console.warn(error);
     }
