@@ -1,8 +1,14 @@
-import Menu from '@/components/menu/Menu';
-import styles from './singlePage.module.css';
 import Image from 'next/image';
+
+//components
+import Menu from '@/components/menu/Menu';
+import Like from '@/components/organism/Like';
 import Comments from '@/components/comments/Comments';
+//styles
+import styles from './singlePage.module.css';
+//utils
 import { API_URL_TEST } from '@/utils/contants';
+import { getAuthSession } from '@/utils/auth';
 import { IPost } from '@/utils/api';
 
 const getData = async (slug: string): Promise<IPost | null> => {
@@ -18,6 +24,8 @@ const getData = async (slug: string): Promise<IPost | null> => {
 };
 
 const SinglePage = async ({ params }: { params: { slug: string } }) => {
+  const session = await getAuthSession();
+
   const { slug } = params;
   const data = await getData(slug);
 
@@ -62,7 +70,12 @@ const SinglePage = async ({ params }: { params: { slug: string } }) => {
             className={styles.description}
             dangerouslySetInnerHTML={{ __html: data?.desc || '' }}
           />
-
+          <div>
+            <Like
+              postSlug={slug ?? null}
+              userEmail={session?.user?.email ?? null}
+            />
+          </div>
           <div className={styles.comment}>
             <Comments postSlug={slug} />
           </div>

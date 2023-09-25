@@ -12,6 +12,7 @@ export interface IPage {
   desc: string;
   img: null;
   views: number;
+  likes: number;
   catSlug: string;
   userEmail: string;
 }
