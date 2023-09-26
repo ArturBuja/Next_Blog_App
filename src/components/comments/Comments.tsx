@@ -7,6 +7,7 @@ import { useSession } from 'next-auth/react';
 import { API_URL_TEST } from '@/utils/contants';
 import { IComment } from '@/utils/api';
 import { useState } from 'react';
+import ThreeDots from '../organism/threeDots/ThreeDots';
 
 const fetcher = async (url: string) => {
   const res = await fetch(url);
@@ -18,7 +19,7 @@ const fetcher = async (url: string) => {
 };
 
 const Comments = ({ postSlug }: { postSlug: string }) => {
-  const { status } = useSession();
+  const { status, data: user } = useSession();
   const {
     data,
     mutate,
@@ -53,6 +54,7 @@ const Comments = ({ postSlug }: { postSlug: string }) => {
       });
     }
   };
+
   return (
     <div className={styles.container}>
       <h1 className={styles.title}>Komentarze</h1>
@@ -91,10 +93,18 @@ const Comments = ({ postSlug }: { postSlug: string }) => {
                     />
                   )}
                   <div className={styles.userInfo}>
-                    <span className={styles.username}>{comment.user.name}</span>
-                    <span className={styles.date}>
-                      {new Date(comment.createdAt).toLocaleString()}
-                    </span>
+                    <div style={{ flexDirection: 'column', display: 'flex' }}>
+                      <span className={styles.username}>
+                        {comment.user.name}
+                      </span>
+                      <span className={styles.date}>
+                        {new Date(comment.createdAt).toLocaleString()}
+                      </span>
+                    </div>
+
+                    {comment.user.email === user?.user?.email && (
+                      <ThreeDots mutate={mutate} commentId={comment.id} />
+                    )}
                   </div>
                 </div>
                 <p className={styles.desc}>{comment.desc}</p>
