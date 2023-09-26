@@ -1,0 +1,169 @@
+.container {
+  position: relative;
+}
+.dots {
+  scale: 0.4;
+  rotate: 90deg;
+  width: 3.75rem;
+  height: 1.875rem;
+  border: none;
+  background: transparent;
+  position: relative;
+  cursor: pointer;
+}
+.dots:focus {
+  outline: none;
+}
+.dots.dots:after,
+.dots.dots:before,
+.dots.dots span {
+  width: 10%;
+  height: 20%;
+  border-radius: 100px;
+  position: absolute;
+  left: 0px;
+  background: var(--textColor);
+  transform: rotate(0deg);
+  transition: all 0.4s;
+  left: 1%;
+  right: 1%;
+  margin: 0 auto;
+}
+.dots.dots:after,
+.dots.dots:before {
+  content: '';
+}
+.dots.dots:after {
+  top: -10%;
+  margin-top: 0px;
+}
+.dots.dots:before {
+  bottom: -10%;
+  margin-bottom: 0px;
+}
+.dots.dots span {
+  top: 50%;
+  margin-top: -2px;
+}
+.dots.dots.on:after {
+  transform: rotate(135deg) translate(9px, -9px);
+  width: 100%;
+}
+.dots.dots.on:before {
+  transform: rotate(225deg);
+  bottom: 50%;
+  margin-bottom: -2px;
+  width: 100%;
+}
+.dots.dots.on span {
+  transform: rotate(135deg);
+}
+
+/* More Button / Dropdown Menu */
+
+.btn,
+.menuBtn {
+  background: none;
+  border: 0 none;
+  line-height: normal;
+  overflow: visible;
+  width: 100%;
+  text-align: left;
+  outline: none;
+  cursor: pointer;
+}
+
+.menu {
+  position: absolute;
+  z-index: 900;
+  float: left;
+  right: 0;
+  padding: 3px 0;
+  margin-top: 9px;
+  background-color: #fff;
+  border: 1px solid #ccd8e0;
+  border-radius: 4px;
+  box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.25);
+  opacity: 0;
+  transform: translate(0, 15px) scale(0.95);
+  transition: transform 0.1s ease-out, opacity 0.1s ease-out;
+  pointer-events: none;
+}
+
+.menuCaret {
+  position: absolute;
+  top: -10px;
+  right: 20px;
+  width: 18px;
+  height: 10px;
+  float: left;
+  overflow: hidden;
+}
+
+.menuCaretOuter,
+.menuCaretInner {
+  position: absolute;
+  display: inline-block;
+  margin-left: -1px;
+  font-size: 0;
+  line-height: 1;
+}
+
+.menuCaretOuter {
+  border-bottom: 10px solid #c1d0da;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  height: auto;
+  left: 0;
+  top: 0;
+  width: auto;
+}
+
+.menuCaretInner {
+  top: 1px;
+  left: 1px;
+  border-left: 9px solid transparent;
+  border-right: 9px solid transparent;
+  border-bottom: 9px solid #fff;
+}
+
+.menuItems {
+  margin: 0;
+  list-style: none;
+  padding: 0;
+}
+
+.menuItem {
+  display: block;
+}
+
+.menuBtn {
+  min-width: 100%;
+  color: #66757f;
+  cursor: pointer;
+  display: block;
+  font-size: 13px;
+  line-height: 18px;
+  padding: 5px 20px;
+  position: relative;
+  white-space: nowrap;
+}
+
+.menuItem:hover {
+  background-color: var(--contextMenuBg);
+}
+
+.menuItem:hover .menu-btn {
+  color: #fff;
+}
+
+.btn:hover .dot,
+.showMenu .dot {
+  background-color: #516471;
+}
+
+.showMenu.menu {
+  opacity: 1;
+  transform: translate(0, 0) scale(1);
+  pointer-events: auto;
+}

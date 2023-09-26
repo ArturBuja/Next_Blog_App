@@ -14,6 +14,9 @@ export const GET = async (request: Request) => {
         ...(postSlug && { postSlug }),
       },
       include: { user: true },
+      orderBy: {
+        createdAt: 'desc',
+      },
     });
     return new NextResponse(JSON.stringify(comments), { status: 200 });
   } catch (err) {
@@ -42,6 +45,29 @@ export const POST = async (request: Request) => {
     return new NextResponse(JSON.stringify(comment), { status: 200 });
   } catch (err) {
     console.log(err);
+    return new NextResponse(
+      JSON.stringify({ message: 'Something went wrong!' }),
+      { status: 500 }
+    );
+  }
+};
+
+export const DELETE = async (request: Request) => {
+  const session = await getAuthSession();
+  if (!session) {
+    return new NextResponse(JSON.stringify({ message: 'Not authorized' }), {
+      status: 401,
+    });
+  }
+  try {
+    const body = await request.json();
+    console.log('object', body.id);
+    const comment = await prisma.comment.delete({
+      where: { id: body.id },
+    });
+    return new NextResponse(JSON.stringify(comment), { status: 200 });
+  } catch (error) {
+    console.log(error);
     return new NextResponse(
       JSON.stringify({ message: 'Something went wrong!' }),
       { status: 500 }
