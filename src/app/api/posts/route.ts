@@ -9,6 +9,41 @@ export const GET = async (request: Request) => {
 
   const page = parseInt(searchParams.get('page') || '1');
   const cat = searchParams.get('cat');
+  const popular = searchParams.get('popular');
+  const liked = searchParams.get('liked');
+  if (popular) {
+    const posts = await prisma.post.findMany({
+      where: {
+        views: {
+          gt: 0,
+        },
+      },
+      orderBy: [
+        {
+          views: 'desc',
+        },
+      ],
+      take: 3,
+    });
+    return new NextResponse(JSON.stringify(posts), { status: 200 });
+  }
+  if (liked) {
+    const posts = await prisma.post.findMany({
+      where: {
+        likes: {
+          gt: 0,
+        },
+      },
+      orderBy: [
+        {
+          likes: 'desc',
+        },
+      ],
+      take: 3,
+    });
+    return new NextResponse(JSON.stringify(posts), { status: 200 });
+  }
+
   const query: Prisma.PostFindManyArgs = {
     take: POST_PER_PAGE,
     skip: POST_PER_PAGE * (page - 1),
@@ -26,7 +61,9 @@ export const GET = async (request: Request) => {
       prisma.post.count({ where: query.where }),
     ]);
 
-    return new NextResponse(JSON.stringify({ posts, count }), { status: 200 });
+    return new NextResponse(JSON.stringify({ posts, count }), {
+      status: 200,
+    });
   } catch (err) {
     console.log(err);
     return new NextResponse(

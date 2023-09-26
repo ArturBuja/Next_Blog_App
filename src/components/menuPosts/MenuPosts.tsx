@@ -5,7 +5,7 @@ import styles from './menuPosts.module.css';
 import { IPage } from '@/utils/api';
 import { API_URL_TEST } from '@/utils/contants';
 
-const getData = async (): Promise<{ posts: IPage[]; count: number }> => {
+const getData = async (): Promise<IPage[]> => {
   const res = await fetch(`${API_URL_TEST}/posts?popular=true`, {
     cache: 'no-cache',
   });
@@ -18,9 +18,9 @@ const getData = async (): Promise<{ posts: IPage[]; count: number }> => {
 };
 
 const MenuPosts = async () => {
-  const { posts, count } = await getData();
-  posts.sort((a, b) => b.views - a.views);
-  if (count === 0) {
+  const posts = await getData();
+
+  if (posts.length === 0) {
     return (
       <div className={styles.items}>
         <p>Brak najpopularniejszych postów</p>
