@@ -5,8 +5,8 @@ import styles from './menuPopular.module.css';
 import { IPage } from '@/utils/api';
 import { API_URL_TEST } from '@/utils/contants';
 
-const getData = async (): Promise<{ posts: IPage[]; count: number }> => {
-  const res = await fetch(`${API_URL_TEST}/posts`, {
+const getData = async (): Promise<IPage[]> => {
+  const res = await fetch(`${API_URL_TEST}/posts?liked=true`, {
     cache: 'no-cache',
   });
 
@@ -18,11 +18,11 @@ const getData = async (): Promise<{ posts: IPage[]; count: number }> => {
 };
 
 const MenuPopular = async () => {
-  const { posts } = await getData();
-  posts.sort((a, b) => b.likes - a.likes);
+  const posts = await getData();
+
   return (
     <div className={styles.items}>
-      {posts[0].likes === 0 ? (
+      {posts.length === 0 ? (
         <p className={styles.text}>Brak najbardziej lubionych postów</p>
       ) : (
         posts.map((post: IPage) => (

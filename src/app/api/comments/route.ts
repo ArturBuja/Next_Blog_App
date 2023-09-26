@@ -61,7 +61,6 @@ export const DELETE = async (request: Request) => {
   }
   try {
     const body = await request.json();
-    console.log('object', body.id);
     const comment = await prisma.comment.delete({
       where: { id: body.id },
     });
