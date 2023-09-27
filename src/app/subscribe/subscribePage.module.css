@@ -1,0 +1,58 @@
+.form {
+  background-color: var(--softBg);
+  padding: 3rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1.25rem;
+  width: 50%;
+  margin: 0 auto;
+}
+.input {
+  border: none;
+  width: max-content;
+  border-radius: 0.625rem;
+  padding: 0.625rem;
+  outline: none;
+  text-align: center;
+}
+.message {
+  text-align: center;
+  font-size: 1.125rem;
+  color: var(--textColor);
+  font-weight: 500;
+  margin-bottom: 1.25rem;
+  width: 60%;
+}
+.button {
+  padding: 0.625rem 1.25rem;
+  border: none;
+  background-color: #1a8917;
+  color: #fff;
+  cursor: pointer;
+  border-radius: 20px;
+  align-self: flex-end;
+}
+.button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+@media screen and (max-width: 1280px) {
+  .form {
+    width: 80%;
+  }
+}
+
+@media screen and (max-width: 640px) {
+  .form {
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .message {
+    width: 100%;
+  }
+}

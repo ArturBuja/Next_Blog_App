@@ -25,6 +25,10 @@
 .desc {
   font-weight: 300;
 }
+.newsletter {
+  font-weight: 300;
+  text-decoration: underline !important;
+}
 .icons {
   margin-top: 0.625rem;
   display: flex;

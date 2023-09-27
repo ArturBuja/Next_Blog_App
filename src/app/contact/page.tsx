@@ -6,11 +6,12 @@ import emailjs from '@emailjs/browser';
 import styles from './contactPage.module.css';
 //hooks
 import useInput from '@/hooks/useInput';
+//utils
+import { isEmailOrEmpty } from '@/utils/helpers';
 
 const isNotEmptyMessage = (value: string) => value.trim().length >= 10;
 const isNotEmptyName = (value: string) => value.trim().length >= 2;
-const isEmailOrEmpty = (value: string) =>
-  /^([A-Za-z0-9_\-.])+@([A-Za-z0-9_\-.])+\.([A-Za-z]{2,4})$/.test(value);
+
 const Contact = () => {
   const form = useRef<HTMLFormElement | null>(null);
   const [emailIsSending, setEmailIsSending] = useState(false);
@@ -123,7 +124,7 @@ const Contact = () => {
               onBlur={emailBlurHandler}
               value={email}
               className={styles.input}
-              type='text'
+              type='email'
               placeholder={'Wpisz swój email'}
             />
 

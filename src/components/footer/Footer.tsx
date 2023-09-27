@@ -20,6 +20,9 @@ const Footer = () => {
           programowanie, relacje z podróży, kulinarne eksploracje oraz ogólny
           styl życia.
         </p>
+        <Link href='/subscribe' className={styles.newsletter}>
+          {`Zapisz się do newslettera ;)`}
+        </Link>
         <div className={styles.icons}>
           <Socials />
         </div>
