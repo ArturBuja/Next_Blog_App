@@ -1,5 +1,7 @@
 'use client';
 import { useEffect, useRef, useState } from 'react';
+
+//styles
 import styles from './threeDots.module.css';
 
 const ThreeDots = ({
@@ -30,14 +32,23 @@ const ThreeDots = ({
     };
   }, []);
   const handleDelete = async () => {
-    await fetch(`/api/comments/`, {
-      method: 'DELETE',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ id: commentId }),
-    });
-    mutate();
+    try {
+      const response = await fetch(`/api/comments/`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ id: commentId }),
+      });
+
+      if (response.ok) {
+        mutate();
+      } else {
+        throw new Error('Failed to delete comment');
+      }
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (

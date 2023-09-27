@@ -1,8 +1,11 @@
 import React from 'react';
-import styles from './footer.module.css';
-import Image from 'next/image';
+
 import Link from 'next/link';
-import Socials from '../organism/Socials';
+
+//components
+import Socials from '@/components/organism/Socials';
+//styles
+import styles from './footer.module.css';
 
 const Footer = () => {
   return (
@@ -13,8 +16,9 @@ const Footer = () => {
           <h1 className={styles.logoText}>from lines to life</h1>
         </div>
         <p className={styles.desc}>
-          Osobisty blog, w którym opisuje trochę życia, trochę pracy, trochę
-          prywaty!
+          To osobisty blog, który oferuje różnorodność tematów, obejmując
+          programowanie, relacje z podróży, kulinarne eksploracje oraz ogólny
+          styl życia.
         </p>
         <div className={styles.icons}>
           <Socials />

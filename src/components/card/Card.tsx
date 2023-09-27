@@ -1,6 +1,9 @@
 import Image from 'next/image';
-import styles from './card.module.css';
 import Link from 'next/link';
+
+//styles
+import styles from './card.module.css';
+//utils
 import { IPage } from '@/utils/api';
 
 const Card = ({ post }: { post: IPage }) => {

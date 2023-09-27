@@ -1,9 +1,13 @@
+import React from 'react';
+
 import Image from 'next/image';
 import Link from 'next/link';
-import React from 'react';
-import styles from './menuPosts.module.css';
+
+//utils
 import { IPage } from '@/utils/api';
 import { API_URL_TEST } from '@/utils/contants';
+//styles
+import styles from './menuPosts.module.css';
 
 const getData = async (): Promise<IPage[]> => {
   const res = await fetch(`${API_URL_TEST}/posts?popular=true`, {

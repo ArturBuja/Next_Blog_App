@@ -1,9 +1,13 @@
 import React from 'react';
-import styles from './navbar.module.css';
+
 import Link from 'next/link';
-import AuthLinks from '../authLinks/AuthLinks';
-import ThemeToggle from '../themeToogle/ThemeToggle';
-import Socials from '../organism/Socials';
+
+//styles
+import AuthLinks from '@/components/authLinks/AuthLinks';
+import ThemeToggle from '@/components/themeToogle/ThemeToggle';
+import Socials from '@/components/organism/Socials';
+//components
+import styles from './navbar.module.css';
 
 const NavBar = () => {
   const email = process.env.ADMIN_EMAIL || '';

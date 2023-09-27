@@ -1,7 +1,7 @@
-// pages/api/likes.js
+import { NextResponse } from 'next/server';
+//utils
 import { getAuthSession } from '@/utils/auth';
 import prisma from '@/utils/conenct';
-import { NextResponse } from 'next/server';
 
 export const POST = async (req: Request) => {
   const session = await getAuthSession();

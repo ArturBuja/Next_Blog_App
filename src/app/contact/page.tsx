@@ -1,7 +1,9 @@
 'use client';
-import useInput from '@/hooks/useInput';
-import emailjs from '@emailjs/browser';
 import React, { useRef } from 'react';
+import emailjs from '@emailjs/browser';
+//hooks
+import useInput from '@/hooks/useInput';
+//styles
 import styles from './contactPage.module.css';
 
 const isNotEmptyMessage = (value: string) => value.trim().length >= 10;

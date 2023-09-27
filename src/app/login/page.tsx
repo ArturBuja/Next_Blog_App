@@ -1,8 +1,10 @@
 'use client';
 import { useEffect } from 'react';
-import { useSession, signIn } from 'next-auth/react';
-import styles from './loginPage.module.css';
 import { useRouter } from 'next/navigation';
+import { useSession, signIn } from 'next-auth/react';
+
+//styles
+import styles from './loginPage.module.css';
 
 const LoginPage = () => {
   const { data, status } = useSession();

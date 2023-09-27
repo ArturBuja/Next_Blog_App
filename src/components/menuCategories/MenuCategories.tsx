@@ -1,7 +1,11 @@
-import Link from 'next/link';
 import React from 'react';
-import styles from './menuCategories.module.css';
+
+import Link from 'next/link';
+
+//api
 import { getAllCategories } from '@/app/api';
+//styles
+import styles from './menuCategories.module.css';
 
 const MenuCategories = async () => {
   const data = await getAllCategories();
