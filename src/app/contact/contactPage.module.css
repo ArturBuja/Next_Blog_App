@@ -49,6 +49,10 @@
   width: max-content;
   align-self: flex-end;
 }
+.button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
 .inputError {
   margin: 0.625rem 0;
   color: #ff0033;
