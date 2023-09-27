@@ -1,5 +1,6 @@
-import styles from './aboutPage.module.css';
 import Image from 'next/image';
+//styles
+import styles from './aboutPage.module.css';
 
 const AboutMe = () => {
   const paragraphs = [

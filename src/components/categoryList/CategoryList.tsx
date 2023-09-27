@@ -1,7 +1,11 @@
 import React from 'react';
-import styles from './categoryList.module.css';
+
 import Link from 'next/link';
 import Image from 'next/image';
+
+//styles
+import styles from './categoryList.module.css';
+//utils
 import { ICategory } from '@/utils/api';
 import { API_URL_TEST } from '@/utils/contants';
 

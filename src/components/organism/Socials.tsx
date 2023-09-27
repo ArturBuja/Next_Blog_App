@@ -1,8 +1,11 @@
 'use client';
 import React, { useContext, useMemo } from 'react';
-import { ThemeContext } from '@/context/ThemeContext';
+
 import Image from 'next/image';
 import Link from 'next/link';
+
+// Context
+import { ThemeContext } from '@/context/ThemeContext';
 
 const Socials = () => {
   const { theme } = useContext(ThemeContext);

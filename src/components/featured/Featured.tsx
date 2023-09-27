@@ -1,8 +1,11 @@
 'use client';
 import React from 'react';
-import styles from './featured.module.css';
+
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
+
+//styles
+import styles from './featured.module.css';
 
 const Featured = () => {
   const router = useRouter();

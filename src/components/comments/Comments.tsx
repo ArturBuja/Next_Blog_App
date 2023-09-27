@@ -1,13 +1,18 @@
 'use client';
-import Link from 'next/link';
-import styles from './comments.module.css';
-import Image from 'next/image';
+import { useState } from 'react';
+
 import useSWR from 'swr';
+import Link from 'next/link';
+import Image from 'next/image';
 import { useSession } from 'next-auth/react';
+
+//components
+import ThreeDots from '@/components/organism/threeDots/ThreeDots';
+//utils
 import { API_URL_TEST } from '@/utils/contants';
 import { IComment } from '@/utils/api';
-import { useState } from 'react';
-import ThreeDots from '../organism/threeDots/ThreeDots';
+//styles
+import styles from './comments.module.css';
 
 const fetcher = async (url: string) => {
   const res = await fetch(url);

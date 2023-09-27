@@ -1,5 +1,9 @@
 'use client';
 import { useEffect, useState } from 'react';
+import Image from 'next/image';
+import dynamic from 'next/dynamic';
+import { useRouter } from 'next/navigation';
+import { useSession } from 'next-auth/react';
 //extensions
 import {
   getStorage,
@@ -8,10 +12,6 @@ import {
   getDownloadURL,
 } from 'firebase/storage';
 import 'react-quill/dist/quill.bubble.css';
-import Image from 'next/image';
-import { useSession } from 'next-auth/react';
-import { useRouter } from 'next/navigation';
-import dynamic from 'next/dynamic';
 //styles
 import styles from './writePage.module.css';
 //utils

@@ -1,7 +1,11 @@
 'use client';
 import { useContext, useMemo } from 'react';
-import styles from './themeToggle.module.css';
+
 import Image from 'next/image';
+
+// Styles
+import styles from './themeToggle.module.css';
+// Contexts
 import { ThemeContext } from '@/context/ThemeContext';
 
 const ThemeToggle = () => {

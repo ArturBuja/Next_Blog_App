@@ -1,8 +1,9 @@
-import { getAuthSession } from '@/utils/auth';
-import prisma from '@/utils/conenct';
-import { POST_PER_PAGE } from '@/utils/contants';
-import { Prisma } from '@prisma/client';
 import { NextResponse } from 'next/server';
+//utils
+import { POST_PER_PAGE } from '@/utils/contants';
+import { getAuthSession } from '@/utils/auth';
+import { Prisma } from '@prisma/client';
+import prisma from '@/utils/conenct';
 
 export const GET = async (request: Request) => {
   const { searchParams } = new URL(request.url);

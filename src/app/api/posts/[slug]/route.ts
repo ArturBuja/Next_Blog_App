@@ -1,5 +1,6 @@
-import prisma from '@/utils/conenct';
 import { NextResponse } from 'next/server';
+//utils
+import prisma from '@/utils/conenct';
 
 //GET Single post
 export const GET = async (

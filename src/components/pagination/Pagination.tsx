@@ -1,7 +1,10 @@
 'use client';
-import React, { useState, useEffect } from 'react';
-import styles from './pagination.module.css';
+import React from 'react';
+
 import { useRouter } from 'next/navigation';
+
+// Styles
+import styles from './pagination.module.css';
 
 const Pagination = ({
   page,

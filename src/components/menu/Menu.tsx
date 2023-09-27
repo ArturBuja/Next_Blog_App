@@ -1,8 +1,11 @@
 import React from 'react';
+
+//components
+import MenuPosts from '@/components/menuPosts/MenuPosts';
+import MenuCategories from '@/components/menuCategories/MenuCategories';
+import MenuPopular from '@/components/menuPopular/menuPopular';
+//styles
 import styles from './menu.module.css';
-import MenuPosts from '../menuPosts/MenuPosts';
-import MenuCategories from '../menuCategories/MenuCategories';
-import MenuPopular from '../menuPopular/menuPopular';
 
 const Menu = () => {
   return (

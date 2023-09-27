@@ -1,9 +1,13 @@
 import React from 'react';
-import styles from './cardList.module.css';
-import Pagination from '../pagination/Pagination';
+
+//components
+import Pagination from '@/components/pagination/Pagination';
+import Card from '@/components/card/Card';
+//utils
 import { API_URL_TEST, POST_PER_PAGE } from '@/utils/contants';
-import Card from '../card/Card';
 import { IPage } from '@/utils/api';
+//styles
+import styles from './cardList.module.css';
 
 const getData = async (
   page: number,

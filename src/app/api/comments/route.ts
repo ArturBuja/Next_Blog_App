@@ -1,6 +1,7 @@
-import { getAuthSession } from '@/utils/auth';
 import prisma from '@/utils/conenct';
 import { NextResponse } from 'next/server';
+//utils
+import { getAuthSession } from '@/utils/auth';
 
 //GET all comments from posr
 export const GET = async (request: Request) => {
