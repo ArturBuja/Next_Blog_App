@@ -1,8 +1,11 @@
 'use client';
-import useInput from '@/hooks/useInput';
+import React, { useRef, useState } from 'react';
 import emailjs from '@emailjs/browser';
-import React, { useRef } from 'react';
+
+//styles
 import styles from './contactPage.module.css';
+//hooks
+import useInput from '@/hooks/useInput';
 
 const isNotEmptyMessage = (value: string) => value.trim().length >= 10;
 const isNotEmptyName = (value: string) => value.trim().length >= 2;
@@ -10,6 +13,7 @@ const isEmailOrEmpty = (value: string) =>
   /^([A-Za-z0-9_\-.])+@([A-Za-z0-9_\-.])+\.([A-Za-z]{2,4})$/.test(value);
 const Contact = () => {
   const form = useRef<HTMLFormElement | null>(null);
+  const [emailIsSending, setEmailIsSending] = useState(false);
   const {
     value: message,
     isValid: messageIsValid,
@@ -57,6 +61,7 @@ const Contact = () => {
         process.env.NEXT_PUBLIC_EMAIL_JS_TEMPLATE_ID &&
         process.env.NEXT_PUBLIC_EMAIL_JS_PUBLIC_KEY
       ) {
+        setEmailIsSending(true);
         emailjs
           .sendForm(
             process.env.NEXT_PUBLIC_EMAIL_JS_SERVICE_ID,
@@ -66,16 +71,18 @@ const Contact = () => {
           )
           .then(
             () => {
+              setEmailIsSending(false);
               alert(
                 'Poczta została wysłana. Skontaktuję się z Tobą tak szybko, jak to możliwe. Dziękuję.\n'
               );
             },
             () => {
-              alert('Coś poszło nie tak. Spróbuj ponownie później\n');
+              setEmailIsSending(false);
+              return alert('Coś poszło nie tak. Spróbuj ponownie później\n');
             }
           );
       } else {
-        alert('Wystąpił błąd wewnętrzny. Spróbuj ponownie później\n');
+        return alert('Wystąpił błąd wewnętrzny. Spróbuj ponownie później\n');
       }
       resetForm();
     } else {
@@ -143,7 +150,11 @@ const Contact = () => {
           </span>
         </div>
 
-        <button className={styles.button} type='submit'>
+        <button
+          className={styles.button}
+          disabled={emailIsSending}
+          type='submit'
+        >
           Wyślij wiadomość
         </button>
       </form>
