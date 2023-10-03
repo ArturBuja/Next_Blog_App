@@ -43,12 +43,17 @@ a {
 .ql-container.ql-bubble {
   font-size: 1.75rem;
 }
-
+.ql-editor.ql-blank[data-placeholder] {
+  /* content: attr(data-placeholder); */
+  font-size: medium;
+}
 div.ql-editor.ql-blank::before {
   color: var(--softTextColor);
   padding-top: 3%;
 }
-
+.ql-editor p {
+  font-size: 1.125rem;
+}
 .lock-scroll {
   overflow: hidden;
 }

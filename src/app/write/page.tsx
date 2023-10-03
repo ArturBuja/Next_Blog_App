@@ -22,6 +22,28 @@ const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 const metadata = {
   contentType: 'image/jpeg',
 };
+const modules = {
+  toolbar: [
+    [{ header: [1, 2, 3, 4, false] }],
+    ['bold', 'italic', 'underline', 'blockquote'],
+    [{ indent: '-1' }, { indent: '+1' }],
+    ['link', 'image'],
+    ['clean'],
+    ['code-block'],
+  ],
+};
+
+const formats = [
+  'header',
+  'bold',
+  'italic',
+  'underline',
+  'blockquote',
+  'indent',
+  'link',
+  'image',
+  'code-block',
+];
 
 const WritePage = () => {
   const { status } = useSession();
@@ -32,6 +54,7 @@ const WritePage = () => {
   const [media, setMedia] = useState('');
   const [title, setTitle] = useState('');
   const [catSlug, setCatSlug] = useState('lifestyle');
+  const [dataIsSending, setDataIsSending] = useState(false);
   const [hasError, setHasError] = useState({
     error: false,
     message: '',
@@ -102,6 +125,7 @@ const WritePage = () => {
       });
       return;
     }
+    setDataIsSending(true);
     const res = await fetch('/api/posts', {
       method: 'POST',
       body: JSON.stringify({
@@ -114,8 +138,10 @@ const WritePage = () => {
     });
     if (res.status === 200) {
       const data = await res.json();
+      setDataIsSending(false);
       router.push(`/posts/${data.slug}`);
     } else {
+      setDataIsSending(false);
       setHasError({
         error: true,
         message: res.statusText,
@@ -126,7 +152,7 @@ const WritePage = () => {
   if (status === 'loading') {
     return <div className={styles.loading}>Ładowanie...</div>;
   }
-
+  console.log(file);
   return (
     <div className={styles.container}>
       <input
@@ -137,16 +163,28 @@ const WritePage = () => {
         onChange={e => setTitle(e.target.value)}
         onFocus={() => setHasError({ error: false, message: '' })}
       />
-      <select
-        className={styles.select}
-        onChange={e => setCatSlug(e.target.value)}
-      >
-        {data.map(category => (
-          <option key={category.name} value={category.name}>
-            {category.name}
-          </option>
-        ))}
-      </select>
+      <div>
+        {file && (
+          <Image
+            quality={10}
+            src={media}
+            alt='miniaturka'
+            width={150}
+            height={150}
+          />
+        )}
+        <select
+          className={styles.select}
+          onChange={e => setCatSlug(e.target.value)}
+        >
+          {data.map(category => (
+            <option key={category.name} value={category.name}>
+              {category.name}
+            </option>
+          ))}
+        </select>
+      </div>
+
       {hasError.error && <p className='error'>{hasError.message}</p>}
       <div className={styles.editor}>
         <button className={styles.button} onClick={() => setOpen(!open)}>
@@ -195,12 +233,18 @@ const WritePage = () => {
           className={styles.textArea}
           theme='bubble'
           value={value}
+          modules={modules}
+          formats={formats}
           onChange={setValue}
           placeholder='Napisz swoja historię..'
           onFocus={() => setHasError({ error: false, message: '' })}
         />
       </div>
-      <button className={styles.publish} onClick={handleSubmit}>
+      <button
+        className={styles.publish}
+        disabled={dataIsSending}
+        onClick={handleSubmit}
+      >
         Publikuj
       </button>
     </div>

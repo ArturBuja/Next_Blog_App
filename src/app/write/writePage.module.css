@@ -76,3 +76,7 @@
   cursor: pointer;
   border-radius: 20px;
 }
+.publish:disabled {
+  cursor: not-allowed;
+  opacity: 0.4;
+}
