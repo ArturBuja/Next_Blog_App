@@ -225,15 +225,15 @@ const WritePage = () => {
         >
           {addIcon}
         </button>
+        <input
+          type='file'
+          id='image'
+          onChange={e => setFile(e.target.files?.[0] || null)}
+          style={{ display: 'none' }}
+          ref={fileInputRef}
+        />
         {open && (
           <div className={styles.add}>
-            <input
-              type='file'
-              id='image'
-              onChange={e => setFile(e.target.files?.[0] || null)}
-              style={{ display: 'none' }}
-              ref={fileInputRef}
-            />
             <button
               className={styles.addButton}
               onClick={() => fileInputRef.current?.click()}
