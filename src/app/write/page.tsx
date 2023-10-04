@@ -18,10 +18,18 @@ import styles from './writePage.module.css';
 import { app } from '@/utils/firebase';
 import { slugify } from '@/utils/helpers';
 const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
+// Icons
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPlus } from '@fortawesome/free-solid-svg-icons/faPlus';
+import { faMinus } from '@fortawesome/free-solid-svg-icons/faMinus';
+import { faImages } from '@fortawesome/free-solid-svg-icons/faImages';
 
 const metadata = {
   contentType: 'image/jpeg',
 };
+
+const imageIcon = <FontAwesomeIcon icon={faImages} size='lg' color='gray' />;
+
 const modules = {
   toolbar: [
     [{ header: [1, 2, 3, 4, false] }],
@@ -59,7 +67,9 @@ const WritePage = () => {
     error: false,
     message: '',
   });
-
+  const addIcon = (
+    <FontAwesomeIcon icon={open ? faMinus : faPlus} size='lg' color='gray' />
+  );
   const data = [
     { name: 'lifestyle' },
     { name: 'food' },
@@ -152,7 +162,7 @@ const WritePage = () => {
   if (status === 'loading') {
     return <div className={styles.loading}>Ładowanie...</div>;
   }
-  console.log(file);
+
   return (
     <div className={styles.container}>
       <input
@@ -188,7 +198,7 @@ const WritePage = () => {
       {hasError.error && <p className='error'>{hasError.message}</p>}
       <div className={styles.editor}>
         <button className={styles.button} onClick={() => setOpen(!open)}>
-          <Image src={'/plus.png'} alt='' width={16} height={16} />
+          {addIcon}
         </button>
         {open && (
           <div className={styles.add}>
@@ -199,33 +209,7 @@ const WritePage = () => {
               style={{ display: 'none' }}
             />
             <button className={styles.addButton}>
-              <label htmlFor='image'>
-                <Image
-                  className={styles.icon}
-                  src={'/image.png'}
-                  alt=''
-                  width={16}
-                  height={16}
-                />
-              </label>
-            </button>
-            <button className={styles.addButton}>
-              <Image
-                className={styles.icon}
-                src={'/external.png'}
-                alt=''
-                width={16}
-                height={16}
-              />
-            </button>
-            <button className={styles.addButton}>
-              <Image
-                className={styles.icon}
-                src={'/video.png'}
-                alt=''
-                width={16}
-                height={16}
-              />
+              <label htmlFor='image'>{imageIcon}</label>
             </button>
           </div>
         )}
