@@ -6,12 +6,12 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { useSession } from 'next-auth/react';
 
-//components
+// Components
 import ThreeDots from '@/components/organism/threeDots/ThreeDots';
-//utils
+// Utils
 import { API_URL_TEST } from '@/utils/contants';
 import { IComment } from '@/utils/api';
-//styles
+// Styles
 import styles from './comments.module.css';
 
 const fetcher = async (url: string) => {
@@ -33,7 +33,9 @@ const Comments = ({ postSlug }: { postSlug: string }) => {
     `${API_URL_TEST}/comments?postSlug=${postSlug}`,
     fetcher
   );
+  const [editMode, setEditMode] = useState(false);
   const [desc, setDesc] = useState('');
+  const [modyfiedId, setModyfiedId] = useState('');
   const [hasError, setHasError] = useState({
     error: false,
     message: '',
@@ -43,13 +45,24 @@ const Comments = ({ postSlug }: { postSlug: string }) => {
       if (!desc.trim()) {
         throw new Error('Pole komentarza nie może być puste');
       }
-      await fetch(`/api/comments`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ desc, postSlug }),
-      });
+      if (editMode) {
+        await fetch(`/api/comments`, {
+          method: 'PATCH',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ id: modyfiedId, desc }),
+        });
+        setEditMode(false);
+      } else {
+        await fetch(`/api/comments`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ desc, postSlug }),
+        });
+      }
       mutate();
       setDesc('');
     } catch (error) {
@@ -74,7 +87,7 @@ const Comments = ({ postSlug }: { postSlug: string }) => {
               onFocus={() => setHasError({ error: false, message: '' })}
             />
             <button className={styles.button} onClick={handleSubmit}>
-              Dodaj
+              {editMode ? 'Zapisz' : 'Dodaj'}
             </button>
           </div>
           {hasError.error && <div className='error'>{hasError.message}</div>}
@@ -105,10 +118,22 @@ const Comments = ({ postSlug }: { postSlug: string }) => {
                       <span className={styles.date}>
                         {new Date(comment.createdAt).toLocaleString()}
                       </span>
+                      {comment.modified && comment.modifiedAt && (
+                        <span className={styles.modificatedDate}>
+                          Komentarz edytowany dnia:{' '}
+                          {new Date(comment.modifiedAt).toLocaleString()}
+                        </span>
+                      )}
                     </div>
 
                     {comment.user.email === user?.user?.email && (
-                      <ThreeDots mutate={mutate} commentId={comment.id} />
+                      <ThreeDots
+                        setEditMode={setEditMode}
+                        setModyfiedId={setModyfiedId}
+                        setDesc={setDesc}
+                        mutate={mutate}
+                        commentId={comment.id}
+                      />
                     )}
                   </div>
                 </div>

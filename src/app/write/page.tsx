@@ -1,5 +1,5 @@
 'use client';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/navigation';
@@ -53,7 +53,16 @@ const formats = [
   'code-block',
 ];
 
+const categories = [
+  { name: 'lifestyle' },
+  { name: 'food' },
+  { name: 'travel' },
+  { name: 'coding' },
+];
+
 const WritePage = () => {
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const addButtonRef = useRef<HTMLButtonElement>(null);
   const { status } = useSession();
   const router = useRouter();
   const [open, setOpen] = useState(false);
@@ -70,12 +79,23 @@ const WritePage = () => {
   const addIcon = (
     <FontAwesomeIcon icon={open ? faMinus : faPlus} size='lg' color='gray' />
   );
-  const data = [
-    { name: 'lifestyle' },
-    { name: 'food' },
-    { name: 'travel' },
-    { name: 'coding' },
-  ];
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      const isClickOutsideButton =
+        addButtonRef.current &&
+        !addButtonRef.current.contains(event.target as Node);
+      if (isClickOutsideButton) {
+        setOpen(false);
+      }
+    };
+
+    document.addEventListener('click', handleClickOutside);
+
+    return () => {
+      document.removeEventListener('click', handleClickOutside);
+    };
+  }, []);
 
   useEffect(() => {
     const redirectToHome = () => {
@@ -121,6 +141,7 @@ const WritePage = () => {
           getDownloadURL(uploadTask.snapshot.ref).then(downloadURL => {
             setMedia(downloadURL);
           });
+          setOpen(false);
         }
       );
     };
@@ -187,7 +208,7 @@ const WritePage = () => {
           className={styles.select}
           onChange={e => setCatSlug(e.target.value)}
         >
-          {data.map(category => (
+          {categories.map(category => (
             <option key={category.name} value={category.name}>
               {category.name}
             </option>
@@ -197,7 +218,11 @@ const WritePage = () => {
 
       {hasError.error && <p className='error'>{hasError.message}</p>}
       <div className={styles.editor}>
-        <button className={styles.button} onClick={() => setOpen(!open)}>
+        <button
+          ref={addButtonRef}
+          className={styles.button}
+          onClick={() => setOpen(!open)}
+        >
           {addIcon}
         </button>
         {open && (
@@ -207,9 +232,13 @@ const WritePage = () => {
               id='image'
               onChange={e => setFile(e.target.files?.[0] || null)}
               style={{ display: 'none' }}
+              ref={fileInputRef}
             />
-            <button className={styles.addButton}>
-              <label htmlFor='image'>{imageIcon}</label>
+            <button
+              className={styles.addButton}
+              onClick={() => fileInputRef.current?.click()}
+            >
+              {imageIcon}
             </button>
           </div>
         )}

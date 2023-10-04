@@ -33,4 +33,6 @@ export interface IComment extends IUser {
   desc: string;
   userEmail: string;
   postSlug: string;
+  modifiedAt?: Date;
+  modified?: boolean;
 }
