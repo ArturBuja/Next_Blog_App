@@ -2,7 +2,6 @@ export const slugify = (str: string) =>
   str
     .toLowerCase()
     .trim()
-    .replace(/[^\w\s-]/g, '')
     .replace(/[ąćęłńóśźż]/g, match => {
       const diacriticMap: { [key: string]: string } = {
         ą: 'a',
@@ -18,6 +17,7 @@ export const slugify = (str: string) =>
       return diacriticMap[match] || match;
     })
     .replace(/[\s_-]+/g, '-')
-    .replace(/^-+|-+$/g, '');
+    .replace(/^-+|-+$/g, '')
+    .replace(/[^\w\s-]/g, '');
 export const isEmailOrEmpty = (value: string) =>
   /^([A-Za-z0-9_\-.])+@([A-Za-z0-9_\-.])+\.([A-Za-z]{2,4})$/.test(value);
