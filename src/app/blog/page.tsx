@@ -3,6 +3,17 @@ import CardList from '@/components/cardList/CardList';
 import Menu from '@/components/menu/Menu';
 //styles
 import styles from './blogPage.module.css';
+import { Metadata } from 'next';
+
+export async function generateMetadata({
+  searchParams,
+}: {
+  searchParams: { cat: string };
+}): Promise<Metadata> {
+  return {
+    title: `Kat. ${searchParams.cat} | From Lines To Life`,
+  };
+}
 
 const BlogPage = ({
   searchParams,

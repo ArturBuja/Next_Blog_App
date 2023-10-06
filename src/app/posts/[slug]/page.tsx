@@ -10,6 +10,34 @@ import styles from './singlePage.module.css';
 import { API_URL_TEST } from '@/utils/contants';
 import { getAuthSession } from '@/utils/auth';
 import { IPost } from '@/utils/api';
+import { Metadata } from 'next';
+
+export async function generateMetadata({
+  params,
+}: {
+  params: { slug: string };
+}): Promise<Metadata> {
+  const res: IPost | null = await fetch(
+    `${API_URL_TEST}/posts/${params.slug}`,
+    {
+      cache: 'no-cache',
+    }
+  ).then(res => res.json());
+
+  if (!res) {
+    throw new Error('Post not found');
+  }
+
+  return {
+    title: res.title ?? 'Post | From Lines To Life',
+    description: res.desc,
+    authors: [
+      {
+        name: 'Artur Buja',
+      },
+    ],
+  };
+}
 
 const getData = async (slug: string): Promise<IPost | null> => {
   const res = await fetch(`${API_URL_TEST}/posts/${slug}`, {

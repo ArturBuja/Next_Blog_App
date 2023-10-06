@@ -2,6 +2,12 @@ import Image from 'next/image';
 //styles
 import styles from './aboutPage.module.css';
 
+export async function generateMetadata() {
+  return {
+    title: 'O mnie | From Lines To Life',
+  };
+}
+
 const AboutMe = () => {
   const paragraphs = [
     'Cześć! Mam na imię Artur 😃',

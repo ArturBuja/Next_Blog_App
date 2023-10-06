@@ -14,13 +14,32 @@ import AuthProvider from '@/providers/AuthProvider';
 import './globals.css';
 
 const inter = Inter({ subsets: ['latin'] });
+export async function generateMetadata(): Promise<Metadata> {
+  return {
+    openGraph: {
+      type: 'website',
+      locale: 'pl',
+      siteName: 'From Lines To Life',
+      url: 'https://fromlinestolife.vercel.app/',
+      title: 'From Lines To Life',
+      description: 'Autorski Blog!',
+    },
+    title: 'From Lines To Life',
+    description: 'Autorski Blog!',
+    authors: [
+      {
+        name: 'Artur Buja',
+      },
+    ],
 
-export const metadata: Metadata = {
-  title: 'From Lines To Life',
-  description: 'Autorski Blog!',
-};
+    applicationName: 'From Lines To Life',
 
-export default async function RootLayout({
+    generator:
+      'Blog, From Lines To Life, fromlinstolife, Artur Blog, Programowanie, Podróże, Jedzenie, Restauracje',
+  };
+}
+
+export default function RootLayout({
   children,
 }: {
   children: React.ReactNode;
