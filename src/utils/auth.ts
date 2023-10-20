@@ -8,7 +8,8 @@ import { getServerSession } from 'next-auth';
 import prisma from './conenct';
 
 export const authOptions = {
-  adapter: PrismaAdapter(prisma),
+  adapters: [PrismaAdapter(prisma)],
+
   providers: [
     GithubProvider({
       clientId: process.env.GITHUB_ID ?? '',
@@ -23,6 +24,21 @@ export const authOptions = {
       clientSecret: process.env.FACEBOOK_SECRET ?? '',
     }),
   ],
+  callbacks: {
+    async jwt({ token, account }) {
+      // Persist the OAuth access_token to the token right after signin
+      if (account) {
+        console.log(account.access_token);
+        token.accessToken = account.access_token;
+      }
+      return token;
+    },
+    async session({ session, token }) {
+      // Send properties to the client, like an access_token from a provider.
+      session.accessToken = token.accessToken;
+      return session;
+    },
+  },
 };
 
 export const getAuthSession = async () => getServerSession(authOptions);

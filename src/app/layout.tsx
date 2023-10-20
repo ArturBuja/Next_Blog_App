@@ -12,6 +12,8 @@ import ThemeProvider from '@/providers/ThemeProvider';
 import AuthProvider from '@/providers/AuthProvider';
 //styles
 import './globals.css';
+import { getServerSession } from 'next-auth';
+import { authOptions } from '@/utils/auth';
 
 const inter = Inter({ subsets: ['latin'] });
 export async function generateMetadata(): Promise<Metadata> {
@@ -39,15 +41,16 @@ export async function generateMetadata(): Promise<Metadata> {
   };
 }
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const session = await getServerSession(authOptions);
   return (
     <html lang='en'>
       <body className={inter.className}>
-        <AuthProvider>
+        <AuthProvider session={session}>
           <ThemeContextProvider>
             <ThemeProvider>
               <div className='container'>

@@ -23,6 +23,11 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons/faPlus';
 import { faMinus } from '@fortawesome/free-solid-svg-icons/faMinus';
 import { faImages } from '@fortawesome/free-solid-svg-icons/faImages';
+import firebase from 'firebase/compat/app';
+import { getAuth, signInWithCustomToken } from 'firebase/auth';
+import { Session } from 'next-auth';
+import { useFirebaseSession } from '@/hooks/useFirebaseSession';
+import { ReactQuillProps } from 'react-quill';
 
 const metadata = {
   contentType: 'image/jpeg',
@@ -30,7 +35,7 @@ const metadata = {
 
 const imageIcon = <FontAwesomeIcon icon={faImages} size='lg' color='gray' />;
 
-const modules = {
+const modules: ReactQuillProps['modules'] = {
   toolbar: [
     [{ header: [1, 2, 3, 4, false] }],
     ['bold', 'italic', 'underline', 'blockquote'],
@@ -60,26 +65,29 @@ const categories = [
   { name: 'coding' },
 ];
 
+const auth = getAuth(app);
 const WritePage = () => {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const addButtonRef = useRef<HTMLButtonElement>(null);
-  const { status } = useSession();
+  const { status, data } = useSession();
   const router = useRouter();
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState('');
   const [file, setFile] = useState<File | null>(null);
   const [media, setMedia] = useState('');
   const [title, setTitle] = useState('');
+  const ses = useFirebaseSession();
   const [catSlug, setCatSlug] = useState('lifestyle');
   const [dataIsSending, setDataIsSending] = useState(false);
   const [hasError, setHasError] = useState({
     error: false,
     message: '',
   });
+
   const addIcon = (
     <FontAwesomeIcon icon={open ? faMinus : faPlus} size='lg' color='gray' />
   );
-
+  console.log(ses);
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       const isClickOutsideButton =
@@ -147,6 +155,20 @@ const WritePage = () => {
     };
     file && upload();
   }, [file]);
+
+  // useEffect(() => {
+  //   // firebase
+  //   //   .auth()
+  //   //   .signInWithCustomToken(data?.accessToken)
+  //   //   .then(userCredential => console.log(userCredential));
+
+  //   console.log(data?.accessToken);
+  //   if (data.accessToken) {
+  //     (async () => {
+  //       await signInWithCustomToken(auth, data.accessToken);
+  //     })();
+  //   }
+  // }, [data?.accessToken]);
 
   const handleSubmit = async () => {
     if (!title || !value) {
